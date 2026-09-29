@@ -58,7 +58,7 @@ This project helps boutique and tailoring businesses manage customers, measureme
 
 ## Author
 
-Amarnath
+Amarnath P
 
 ## License
 
