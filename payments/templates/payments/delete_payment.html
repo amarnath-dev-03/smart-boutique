@@ -1,0 +1,297 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Delete Payment - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        .header {
+            background: #211c19;
+            padding: 19px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 620px;
+            margin: 55px auto 60px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 7px 26px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-header {
+            background: #8b3a32;
+            color: white;
+            text-align: center;
+            padding: 30px 25px;
+        }
+
+        .warning-icon {
+            font-size: 45px;
+            margin-bottom: 10px;
+        }
+
+        .card-header h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .card-header p {
+            margin: 8px 0 0;
+            color: #f5d7d4;
+            font-size: 13px;
+        }
+
+        .content {
+            padding: 32px;
+            text-align: center;
+        }
+
+        .question {
+            color: #5b3a29;
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 22px;
+        }
+
+        .payment-info {
+            background: #faf7f4;
+            border: 1px solid #e8ddd5;
+            border-radius: 11px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .payment-id {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .payment-amount {
+            color: #5b3a29;
+            font-size: 27px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .payment-customer {
+            color: #5b514b;
+            font-size: 14px;
+        }
+
+        .warning-text {
+            background: #fff5f4;
+            border: 1px solid #f0d0cc;
+            color: #8b3a32;
+            border-radius: 9px;
+            padding: 13px;
+            font-size: 13px;
+            margin-bottom: 25px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-align: center;
+        }
+
+        .delete-btn {
+            background: #8b3a32;
+            color: white;
+            border: none;
+        }
+
+        .delete-btn:hover {
+            background: #6f2d27;
+        }
+
+        .cancel-btn {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .cancel-btn:hover {
+            opacity: 0.88;
+        }
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 30px;
+            }
+
+            .content {
+                padding: 24px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <div class="warning-icon">
+                ⚠️
+            </div>
+
+            <h1>
+                Delete Payment
+            </h1>
+
+            <p>
+                Please confirm this action
+            </p>
+
+        </div>
+
+
+        <div class="content">
+
+
+            <div class="question">
+                Are you sure you want to delete this payment?
+            </div>
+
+
+            <div class="payment-info">
+
+                <div class="payment-id">
+                    Payment #{{ payment.id }}
+                </div>
+
+                <div class="payment-amount">
+                    ₹{{ payment.amount|floatformat:2 }}
+                </div>
+
+                <div class="payment-customer">
+                    Customer: <strong>{{ payment.customer.name }}</strong>
+                </div>
+
+            </div>
+
+
+            <div class="warning-text">
+                ⚠️ This action cannot be undone.
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="btn delete-btn"
+                    >
+                        ✓ Yes, Delete
+                    </button>
+
+                    <a
+                        href="{% url 'payment_list' %}"
+                        class="btn cancel-btn"
+                    >
+                        ← No, Go Back
+                    </a>
+
+                </div>
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

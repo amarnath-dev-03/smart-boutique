@@ -1,0 +1,366 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>View Inventory - Uma Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        .header {
+            background: #211c19;
+            color: #e7c98a;
+            padding: 22px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        .header p {
+            margin: 6px 0 0;
+            color: #d8c9bd;
+            font-size: 14px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .card-header p {
+            margin: 7px 0 0;
+            color: #e7d8cd;
+            font-size: 14px;
+        }
+
+        .inventory-info {
+            padding: 30px;
+        }
+
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 18px 0;
+            border-bottom: 1px solid #eee5df;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .icon {
+            width: 45px;
+            font-size: 23px;
+        }
+
+        .info-content {
+            flex: 1;
+        }
+
+        .label {
+            display: block;
+            font-size: 12px;
+            color: #8a7568;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            margin-bottom: 5px;
+        }
+
+        .value {
+            font-size: 17px;
+            font-weight: 600;
+            color: #3b2a21;
+        }
+
+        .price {
+            color: #7a4b2a;
+            font-size: 20px;
+        }
+
+        .quantity {
+            display: inline-block;
+            padding: 6px 14px;
+            border-radius: 8px;
+            background: #f1e3d7;
+            color: #5b3a29;
+            font-size: 17px;
+            font-weight: 700;
+        }
+
+        .description {
+            font-weight: normal;
+            line-height: 1.6;
+        }
+
+        .actions {
+            padding: 0 30px 30px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 22px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            display: inline-block;
+            transition: 0.2s;
+        }
+
+        .back-btn {
+            background: #eee7e2;
+            color: #5b3a29;
+        }
+
+        .edit-btn {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #8b3a32;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 20px;
+            }
+
+            .container {
+                margin: 30px auto;
+            }
+
+            .inventory-info {
+                padding: 20px;
+            }
+
+            .actions {
+                padding: 0 20px 20px;
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <h1>Uma Smart Boutique</h1>
+
+    <p>Smart Tailoring & Boutique Management System</p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="card-header">
+
+            <h2>📦 Inventory Details</h2>
+
+            <p>View complete inventory information</p>
+
+        </div>
+
+
+        <div class="inventory-info">
+
+            <div class="info-row">
+
+                <div class="icon">🆔</div>
+
+                <div class="info-content">
+
+                    <span class="label">Inventory ID</span>
+
+                    <span class="value">
+                        #{{ item.id }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="icon">📦</div>
+
+                <div class="info-content">
+
+                    <span class="label">Item Name</span>
+
+                    <span class="value">
+                        {{ item.name }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="icon">🏷️</div>
+
+                <div class="info-content">
+
+                    <span class="label">Category</span>
+
+                    <span class="value">
+                        {{ item.category|default:"Not specified" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="icon">💰</div>
+
+                <div class="info-content">
+
+                    <span class="label">Price</span>
+
+                    <span class="value price">
+                        ₹{{ item.price }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="icon">📊</div>
+
+                <div class="info-content">
+
+                    <span class="label">Stock Quantity</span>
+
+                    <span class="value quantity">
+                        {{ item.quantity }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="icon">📝</div>
+
+                <div class="info-content">
+
+                    <span class="label">Description</span>
+
+                    <span class="value description">
+                        {{ item.description|default:"No description available." }}
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="info-row">
+
+                <div class="icon">📅</div>
+
+                <div class="info-content">
+
+                    <span class="label">Created Date</span>
+
+                    <span class="value">
+                        {{ item.created_at|date:"d-m-Y H:i" }}
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a href="{% url 'inventory_list' %}" class="btn back-btn">
+                ← Back
+            </a>
+
+            <a href="{% url 'edit_inventory' item.id %}" class="btn edit-btn">
+                ✏ Edit Inventory
+            </a>
+
+            <a href="{% url 'delete_inventory' item.id %}" class="btn delete-btn">
+                🗑 Delete
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

@@ -1,0 +1,566 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Payment Details - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 19px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 900px;
+            margin: 35px auto 60px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            margin: 0;
+            color: #5b3a29;
+            font-size: 27px;
+        }
+
+        .back-btn {
+            background: #5b3a29;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #3f281d;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 28px;
+            text-align: center;
+        }
+
+        .payment-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 23px;
+        }
+
+        .card-header p {
+            margin: 7px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        /* AMOUNT */
+
+        .amount-box {
+            text-align: center;
+            padding: 27px 20px;
+            background: #faf7f4;
+            border-bottom: 1px solid #eee5df;
+        }
+
+        .amount-label {
+            color: #777;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .amount {
+            color: #5b3a29;
+            font-size: 31px;
+            font-weight: bold;
+        }
+
+        /* DETAILS */
+
+        .details {
+            padding: 28px;
+        }
+
+        .section-title {
+            margin: 0 0 18px;
+            color: #5b3a29;
+            font-size: 18px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-box {
+            background: #faf7f4;
+            border: 1px solid #e8ddd5;
+            border-radius: 10px;
+            padding: 17px;
+        }
+
+        .label {
+            color: #777;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            color: #3b2a21;
+            font-size: 15px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff1c9;
+            color: #856404;
+        }
+
+        .paid {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .failed {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .refunded {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        /* NOTES */
+
+        .notes-box {
+            margin-top: 18px;
+            background: #faf7f4;
+            border: 1px solid #e8ddd5;
+            border-radius: 10px;
+            padding: 18px;
+        }
+
+        .notes {
+            color: #5b514b;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .empty {
+            color: #999;
+            font-style: italic;
+            font-size: 13px;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .delete-btn {
+            background: #8b3a32;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #3f281d;
+        }
+
+        .delete-btn:hover {
+            background: #6f2d27;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+
+            .details {
+                padding: 20px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="top-bar">
+
+        <h1 class="page-title">
+            Payment Details
+        </h1>
+
+        <a
+            href="{% url 'payment_list' %}"
+            class="back-btn"
+        >
+            ← Back to Payments
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <!-- HEADER -->
+
+        <div class="card-header">
+
+            <div class="payment-icon">
+                💳
+            </div>
+
+            <h2>
+                Payment #{{ payment.id }}
+            </h2>
+
+            <p>
+                Payment Transaction Details
+            </p>
+
+        </div>
+
+
+        <!-- AMOUNT -->
+
+        <div class="amount-box">
+
+            <div class="amount-label">
+                Payment Amount
+            </div>
+
+            <div class="amount">
+                ₹{{ payment.amount|floatformat:2 }}
+            </div>
+
+        </div>
+
+
+        <!-- DETAILS -->
+
+        <div class="details">
+
+            <h3 class="section-title">
+                Payment Information
+            </h3>
+
+
+            <div class="details-grid">
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Payment ID
+                    </div>
+
+                    <div class="value">
+                        #{{ payment.id }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Customer
+                    </div>
+
+                    <div class="value">
+                        {{ payment.customer.name }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Order
+                    </div>
+
+                    <div class="value">
+                        #{{ payment.order.id }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Payment Method
+                    </div>
+
+                    <div class="value">
+                        {{ payment.payment_method }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Payment Date
+                    </div>
+
+                    <div class="value">
+                        {{ payment.payment_date|date:"d-m-Y h:i A" }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Status
+                    </div>
+
+                    <div class="value">
+
+                        {% if payment.status == "Paid" %}
+
+                            <span class="status paid">
+                                Paid
+                            </span>
+
+                        {% elif payment.status == "Failed" %}
+
+                            <span class="status failed">
+                                Failed
+                            </span>
+
+                        {% elif payment.status == "Refunded" %}
+
+                            <span class="status refunded">
+                                Refunded
+                            </span>
+
+                        {% else %}
+
+                            <span class="status pending">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- NOTES -->
+
+            <div class="notes-box">
+
+                <div class="label">
+                    Notes
+                </div>
+
+                {% if payment.notes %}
+
+                    <div class="notes">
+                        {{ payment.notes }}
+                    </div>
+
+                {% else %}
+
+                    <div class="empty">
+                        No notes added for this payment.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'edit_payment' payment.id %}"
+                    class="action-btn edit-btn"
+                >
+                    ✏️ Edit Payment
+                </a>
+
+                <a
+                    href="{% url 'delete_payment' payment.id %}"
+                    class="action-btn delete-btn"
+                >
+                    🗑 Delete Payment
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

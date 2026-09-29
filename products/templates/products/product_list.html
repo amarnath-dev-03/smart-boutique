@@ -1,0 +1,678 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Products - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 94%;
+            max-width: 1150px;
+            margin: 32px auto 60px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            color: #5b3a29;
+            font-size: 28px;
+        }
+
+        .title-section p {
+            margin: 6px 0 0;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 11px 17px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .dashboard-btn {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .add-btn {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .dashboard-btn:hover,
+        .add-btn:hover {
+            opacity: 0.88;
+        }
+
+        /* SEARCH */
+
+        .search-card {
+            background: white;
+            padding: 18px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            margin-bottom: 22px;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 12px 14px;
+            border: 1px solid #d8ccc4;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #5b3a29;
+        }
+
+        .search-btn {
+            border: none;
+            background: #5b3a29;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .clear-btn {
+            background: #eee7e2;
+            color: #5b3a29;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* TABLE CARD */
+
+        .table-card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.09);
+        }
+
+        .table-top {
+            padding: 18px 22px;
+            border-bottom: 1px solid #eee5df;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-title {
+            color: #5b3a29;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .count {
+            background: #f1e6dc;
+            color: #5b3a29;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* TABLE */
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th {
+            background: #5b3a29;
+            color: white;
+            padding: 14px 12px;
+            font-size: 13px;
+            text-align: left;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #eee5df;
+            font-size: 13px;
+            vertical-align: middle;
+        }
+
+        tbody tr:hover {
+            background: #faf7f4;
+        }
+
+        .product-name {
+            color: #5b3a29;
+            font-weight: bold;
+        }
+
+        .category {
+            color: #6b5d55;
+        }
+
+        .price {
+            font-weight: bold;
+            color: #3b2a21;
+        }
+
+        .description {
+            color: #777;
+            max-width: 210px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* STOCK BADGES */
+
+        .stock {
+            display: inline-block;
+            padding: 6px 11px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .stock-out {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .stock-low {
+            background: #fff1c9;
+            color: #856404;
+        }
+
+        .stock-good {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .action {
+            padding: 7px 10px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .view {
+            background: #eee7e2;
+            color: #5b3a29;
+        }
+
+        .edit {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .delete {
+            background: #f3d7d4;
+            color: #8b3a32;
+        }
+
+        .action:hover {
+            opacity: 0.8;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: #888;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+            color: #5b3a29;
+            margin: 5px 0;
+        }
+
+        .empty p {
+            font-size: 13px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .top-actions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+            .search-form {
+                flex-direction: column;
+            }
+
+            .search-btn,
+            .clear-btn {
+                text-align: center;
+            }
+
+            .table-top {
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div>
+
+        <div class="brand">
+            Smart Boutique
+        </div>
+
+        <div class="subtitle">
+            Smart Tailoring & Boutique
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div class="title-section">
+
+            <h1>
+                Products
+            </h1>
+
+            <p>
+                Manage your boutique products and stock
+            </p>
+
+        </div>
+
+
+        <div class="top-actions">
+
+            <a
+                href="/"
+                class="btn dashboard-btn"
+            >
+                ← Dashboard
+            </a>
+
+            <a
+                href="{% url 'add_product' %}"
+                class="btn add-btn"
+            >
+                + Add Product
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- SEARCH -->
+
+    <div class="search-card">
+
+        <form
+            method="GET"
+            class="search-form"
+        >
+
+            <input
+                type="text"
+                name="search"
+                value="{{ search }}"
+                class="search-input"
+                placeholder="Search product by name or category..."
+            >
+
+            <button
+                type="submit"
+                class="search-btn"
+            >
+                🔍 Search
+            </button>
+
+            {% if search %}
+
+                <a
+                    href="{% url 'product_list' %}"
+                    class="clear-btn"
+                >
+                    Clear
+                </a>
+
+            {% endif %}
+
+        </form>
+
+    </div>
+
+
+    <!-- PRODUCT TABLE -->
+
+    <div class="table-card">
+
+
+        <div class="table-top">
+
+            <div class="table-title">
+                Product List
+            </div>
+
+            <div class="count">
+                {{ products|length }} Products
+            </div>
+
+        </div>
+
+
+        {% if products %}
+
+            <div class="table-wrapper">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Product Name
+                            </th>
+
+                            <th>
+                                Category
+                            </th>
+
+                            <th>
+                                Price
+                            </th>
+
+                            <th>
+                                Stock
+                            </th>
+
+                            <th>
+                                Description
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for product in products %}
+
+                            <tr>
+
+                                <td>
+                                    #{{ product.id }}
+                                </td>
+
+                                <td>
+                                    <span class="product-name">
+                                        {{ product.name }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="category">
+                                        {{ product.category }}
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <span class="price">
+                                        ₹{{ product.price|floatformat:2 }}
+                                    </span>
+                                </td>
+
+                                <td>
+
+                                    {% if product.stock == 0 %}
+
+                                        <span class="stock stock-out">
+                                            Out of Stock
+                                        </span>
+
+                                    {% elif product.stock <= 5 %}
+
+                                        <span class="stock stock-low">
+                                            Low: {{ product.stock }}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="stock stock-good">
+                                            {{ product.stock }}
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    {% if product.description %}
+
+                                        <span class="description">
+                                            {{ product.description }}
+                                        </span>
+
+                                    {% else %}
+
+                                        <span class="description">
+                                            —
+                                        </span>
+
+                                    {% endif %}
+
+                                </td>
+
+                                <td>
+
+                                    <div class="actions">
+
+                                        <a
+                                            href="{% url 'view_product' product.id %}"
+                                            class="action view"
+                                        >
+                                            View
+                                        </a>
+
+                                        <a
+                                            href="{% url 'edit_product' product.id %}"
+                                            class="action edit"
+                                        >
+                                            Edit
+                                        </a>
+
+                                        <a
+                                            href="{% url 'delete_product' product.id %}"
+                                            class="action delete"
+                                        >
+                                            Delete
+                                        </a>
+
+                                    </div>
+
+                                </td>
+
+                            </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h3>
+                    No Products Found
+                </h3>
+
+                <p>
+                    Add your first product to get started.
+                </p>
+
+            </div>
+
+        {% endif %}
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

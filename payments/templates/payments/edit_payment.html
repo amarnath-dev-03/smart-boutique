@@ -1,0 +1,480 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Payment - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        .header {
+            background: #211c19;
+            padding: 19px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 720px;
+            margin: 38px auto 60px;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            margin: 0;
+            color: #5b3a29;
+            font-size: 27px;
+        }
+
+        .back-btn {
+            background: #5b3a29;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #3f281d;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 22px 26px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .card-header p {
+            margin: 6px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5b3a29;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d8ccc4;
+            border-radius: 8px;
+            background: white;
+            color: #3b2a21;
+            font-size: 14px;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #5b3a29;
+            box-shadow: 0 0 0 2px rgba(91, 58, 41, 0.08);
+        }
+
+        textarea {
+            min-height: 105px;
+            resize: vertical;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .error {
+            color: #b00020;
+            font-size: 12px;
+            margin-top: 6px;
+        }
+
+        .non-field-errors {
+            background: #fff0f0;
+            color: #a00000;
+            border: 1px solid #f0cccc;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 20px;
+            font-size: 13px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 14px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .update-btn {
+            background: #5b3a29;
+            color: white;
+            border: none;
+        }
+
+        .update-btn:hover {
+            background: #3f281d;
+        }
+
+        .cancel-btn {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .cancel-btn:hover {
+            opacity: 0.88;
+        }
+
+        .payment-id {
+            display: inline-block;
+            background: #f7f3f0;
+            color: #5b3a29;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-bottom: 18px;
+        }
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+
+            .form-body {
+                padding: 22px 20px;
+            }
+
+            .row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="top-bar">
+
+        <h1 class="page-title">
+            Edit Payment
+        </h1>
+
+        <a
+            href="{% url 'payment_list' %}"
+            class="back-btn"
+        >
+            ← Back to Payments
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <h2>
+                ✏️ Payment Information
+            </h2>
+
+            <p>
+                Update the payment details below
+            </p>
+
+        </div>
+
+
+        <div class="form-body">
+
+
+            <div class="payment-id">
+                Payment #{{ payment.id }}
+            </div>
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                {% if form.non_field_errors %}
+
+                    <div class="non-field-errors">
+                        {{ form.non_field_errors }}
+                    </div>
+
+                {% endif %}
+
+
+                <div class="row">
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.customer.id_for_label }}">
+                            Customer
+                        </label>
+
+                        {{ form.customer }}
+
+                        {% for error in form.customer.errors %}
+                            <div class="error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.order.id_for_label }}">
+                            Order
+                        </label>
+
+                        {{ form.order }}
+
+                        {% for error in form.order.errors %}
+                            <div class="error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="row">
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.amount.id_for_label }}">
+                            Amount
+                        </label>
+
+                        {{ form.amount }}
+
+                        {% for error in form.amount.errors %}
+                            <div class="error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="{{ form.payment_method.id_for_label }}">
+                            Payment Method
+                        </label>
+
+                        {{ form.payment_method }}
+
+                        {% for error in form.payment_method.errors %}
+                            <div class="error">
+                                {{ error }}
+                            </div>
+                        {% endfor %}
+
+                    </div>
+
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="{{ form.status.id_for_label }}">
+                        Payment Status
+                    </label>
+
+                    {{ form.status }}
+
+                    {% for error in form.status.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label for="{{ form.notes.id_for_label }}">
+                        Notes
+                    </label>
+
+                    {{ form.notes }}
+
+                    {% for error in form.notes.errors %}
+                        <div class="error">
+                            {{ error }}
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="btn update-btn"
+                    >
+                        ✓ Update Payment
+                    </button>
+
+                    <a
+                        href="{% url 'payment_list' %}"
+                        class="btn cancel-btn"
+                    >
+                        ← Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

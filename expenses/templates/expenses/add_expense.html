@@ -1,0 +1,479 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Expense - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            color: white;
+            padding: 18px 35px;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e7c98a;
+        }
+
+        .subtitle {
+            margin-top: 4px;
+            font-size: 13px;
+            color: #d8d8d8;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 760px;
+            margin: 40px auto;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .title-area h1 {
+            margin: 0;
+            color: #5b3a29;
+            font-size: 30px;
+        }
+
+        .title-area p {
+            margin: 7px 0 0;
+            color: #806d61;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            background: #e7c98a;
+            color: #3f281d;
+            padding: 11px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .back-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 22px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 20px 28px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .card-header p {
+            margin: 6px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        /* FORM */
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            color: #5b3a29;
+        }
+
+        .required {
+            color: #b33a32;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d8cec7;
+            border-radius: 8px;
+            background: #fff;
+            color: #3b2a21;
+            font-size: 15px;
+            font-family: Arial, sans-serif;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: #5b3a29;
+            box-shadow: 0 0 0 3px rgba(91, 58, 41, 0.10);
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* AMOUNT */
+
+        .amount-wrapper {
+            position: relative;
+        }
+
+        .amount-wrapper::before {
+            content: "₹";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #5b3a29;
+            font-weight: bold;
+            z-index: 1;
+        }
+
+        .amount-wrapper input {
+            padding-left: 32px;
+        }
+
+        /* ERRORS */
+
+        .error {
+            margin-top: 6px;
+            color: #b33a32;
+            font-size: 13px;
+        }
+
+        .error ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
+        /* BUTTON AREA */
+
+        .button-area {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+            padding-top: 22px;
+            border-top: 1px solid #eee7e2;
+        }
+
+        .submit-btn,
+        .cancel-btn {
+            flex: 1;
+            padding: 13px 18px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .submit-btn {
+            background: #5b3a29;
+            color: white;
+            border: none;
+        }
+
+        .submit-btn:hover {
+            background: #43291d;
+        }
+
+        .cancel-btn {
+            background: #eee5df;
+            color: #5b3a29;
+        }
+
+        .cancel-btn:hover {
+            background: #e3d8d0;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 16px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 95%;
+                margin: 25px auto;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .title-area h1 {
+                font-size: 25px;
+            }
+
+            .form-content {
+                padding: 22px;
+            }
+
+            .button-area {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div class="title-area">
+
+            <h1>
+                Add Expense
+            </h1>
+
+            <p>
+                Record a new business expense
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'expense_list' %}"
+            class="back-btn"
+        >
+            ← Back to Expenses
+        </a>
+
+    </div>
+
+
+    <!-- FORM CARD -->
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <h2>
+                Expense Information
+            </h2>
+
+            <p>
+                Enter the details below
+            </p>
+
+        </div>
+
+
+        <div class="form-content">
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- TITLE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Expense Title <span class="required">*</span>
+                    </label>
+
+                    {{ form.title }}
+
+                    {% if form.title.errors %}
+
+                        <div class="error">
+                            {{ form.title.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="form-group">
+
+                    <label>
+                        Category <span class="required">*</span>
+                    </label>
+
+                    {{ form.category }}
+
+                    {% if form.category.errors %}
+
+                        <div class="error">
+                            {{ form.category.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- AMOUNT -->
+
+                <div class="form-group">
+
+                    <label>
+                        Amount <span class="required">*</span>
+                    </label>
+
+                    <div class="amount-wrapper">
+
+                        {{ form.amount }}
+
+                    </div>
+
+                    {% if form.amount.errors %}
+
+                        <div class="error">
+                            {{ form.amount.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label>
+                        Description
+                    </label>
+
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+
+                        <div class="error">
+                            {{ form.description.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="button-area">
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+                        + Add Expense
+                    </button>
+
+                    <a
+                        href="{% url 'expense_list' %}"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

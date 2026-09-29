@@ -1,0 +1,727 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Measurement Details - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f4f1ee;
+            color: #30241e;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 22px 45px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: 700;
+            letter-spacing: .3px;
+        }
+
+        .subtitle {
+            color: #cfc7c2;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .header-right {
+            color: #d8d1cc;
+            font-size: 12px;
+        }
+
+        /* PAGE */
+
+        .container {
+            width: 92%;
+            max-width: 1050px;
+            margin: 38px auto 60px;
+        }
+
+        .page-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            margin: 0;
+            font-size: 30px;
+            color: #4e3426;
+        }
+
+        .page-description {
+            margin: 7px 0 0;
+            color: #8a817c;
+            font-size: 13px;
+        }
+
+        .back-btn {
+            text-decoration: none;
+            background: white;
+            color: #5b3a29;
+            border: 1px solid #ddd2cb;
+            padding: 11px 17px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .back-btn:hover {
+            background: #f8f3ef;
+        }
+
+        /* MAIN CARD */
+
+        .main-card {
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(50, 35, 25, .10);
+            border: 1px solid #eee7e2;
+        }
+
+        /* CARD HEADER */
+
+        .record-header {
+            background: #5b3a29;
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .record-title {
+            color: white;
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .record-subtitle {
+            color: #dfd4ce;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .record-id {
+            background: #e7c98a;
+            color: #3d2a20;
+            padding: 8px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* CONTENT */
+
+        .content {
+            padding: 30px;
+        }
+
+        /* CUSTOMER */
+
+        .customer-section {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 20px;
+            background: #faf7f4;
+            border: 1px solid #eee4dd;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+
+        .customer-icon {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: #e7c98a;
+            color: #4b3022;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .customer-label {
+            color: #918680;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+            margin-bottom: 5px;
+        }
+
+        .customer-name {
+            color: #4f3426;
+            font-size: 21px;
+            font-weight: 700;
+        }
+
+        /* SECTION TITLE */
+
+        .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 17px;
+        }
+
+        .section-line {
+            height: 2px;
+            width: 35px;
+            background: #e7c98a;
+        }
+
+        .section-title {
+            color: #5b3a29;
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        /* MEASUREMENTS */
+
+        .measurement-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+        }
+
+        .measurement-card {
+            border: 1px solid #ebe2dc;
+            border-radius: 12px;
+            padding: 20px;
+            background: #fff;
+            transition: .2s;
+        }
+
+        .measurement-card:hover {
+            box-shadow: 0 5px 16px rgba(70, 45, 30, .08);
+            transform: translateY(-2px);
+        }
+
+        .measurement-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .measurement-name {
+            color: #817872;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            font-weight: 600;
+        }
+
+        .measurement-mark {
+            width: 8px;
+            height: 8px;
+            background: #e7c98a;
+            border-radius: 50%;
+        }
+
+        .measurement-value {
+            color: #4d3224;
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        /* NOTES */
+
+        .notes-section {
+            margin-top: 30px;
+        }
+
+        .notes-card {
+            border: 1px solid #ebe2dc;
+            border-radius: 12px;
+            background: #faf8f6;
+            padding: 20px;
+        }
+
+        .notes-label {
+            color: #817872;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .6px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .notes-text {
+            color: #5f5752;
+            font-size: 14px;
+            line-height: 1.7;
+            white-space: pre-wrap;
+        }
+
+        .empty-notes {
+            color: #aaa19b;
+            font-style: italic;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            margin-top: 30px;
+            padding-top: 22px;
+            border-top: 1px solid #eee6e1;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .edit-btn {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #43291e;
+        }
+
+        .delete-btn {
+            background: #8b3a32;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #702d27;
+        }
+
+        /* FOOTER */
+
+        .footer-note {
+            text-align: center;
+            margin-top: 22px;
+            color: #9b928d;
+            font-size: 11px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 750px) {
+
+            .header {
+                padding: 20px;
+            }
+
+            .header-right {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .page-top {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 18px;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+
+            .record-header {
+                padding: 20px;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .measurement-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions .btn {
+                text-align: center;
+            }
+
+        }
+
+        @media (max-width: 480px) {
+
+            .measurement-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-title {
+                font-size: 25px;
+            }
+
+            .customer-name {
+                font-size: 18px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+
+            <div class="brand">
+                Smart Boutique
+            </div>
+
+            <div class="subtitle">
+                Smart Tailoring & Boutique
+            </div>
+
+        </div>
+
+        <div class="header-right">
+            Measurement Management
+        </div>
+
+    </div>
+
+
+    <!-- PAGE -->
+
+    <div class="container">
+
+
+        <div class="page-top">
+
+            <div>
+
+                <h1 class="page-title">
+                    Measurement Details
+                </h1>
+
+                <p class="page-description">
+                    Customer tailoring measurement record
+                </p>
+
+            </div>
+
+
+            <a
+                href="{% url 'measurement_list' %}"
+                class="back-btn"
+            >
+                ← Back to Measurements
+            </a>
+
+        </div>
+
+
+        <!-- MAIN CARD -->
+
+        <div class="main-card">
+
+
+            <!-- RECORD HEADER -->
+
+            <div class="record-header">
+
+                <div>
+
+                    <div class="record-title">
+                        Measurement Record
+                    </div>
+
+                    <div class="record-subtitle">
+                        Tailoring measurement information
+                    </div>
+
+                </div>
+
+
+                <div class="record-id">
+                    #{{ measurement.id }}
+                </div>
+
+            </div>
+
+
+            <!-- CONTENT -->
+
+            <div class="content">
+
+
+                <!-- CUSTOMER -->
+
+                <div class="customer-section">
+
+                    <div class="customer-icon">
+                        {{ measurement.customer.name|first|upper }}
+                    </div>
+
+                    <div>
+
+                        <div class="customer-label">
+                            Customer
+                        </div>
+
+                        <div class="customer-name">
+                            {{ measurement.customer.name }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BODY MEASUREMENTS -->
+
+                <div class="section-heading">
+
+                    <div class="section-line"></div>
+
+                    <div class="section-title">
+                        Body Measurements
+                    </div>
+
+                </div>
+
+
+                <div class="measurement-grid">
+
+
+                    <div class="measurement-card">
+
+                        <div class="measurement-top">
+
+                            <div class="measurement-name">
+                                Bust
+                            </div>
+
+                            <div class="measurement-mark"></div>
+
+                        </div>
+
+                        <div class="measurement-value">
+                            {{ measurement.bust }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="measurement-card">
+
+                        <div class="measurement-top">
+
+                            <div class="measurement-name">
+                                Waist
+                            </div>
+
+                            <div class="measurement-mark"></div>
+
+                        </div>
+
+                        <div class="measurement-value">
+                            {{ measurement.waist }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="measurement-card">
+
+                        <div class="measurement-top">
+
+                            <div class="measurement-name">
+                                Hip
+                            </div>
+
+                            <div class="measurement-mark"></div>
+
+                        </div>
+
+                        <div class="measurement-value">
+                            {{ measurement.hip }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="measurement-card">
+
+                        <div class="measurement-top">
+
+                            <div class="measurement-name">
+                                Shoulder
+                            </div>
+
+                            <div class="measurement-mark"></div>
+
+                        </div>
+
+                        <div class="measurement-value">
+                            {{ measurement.shoulder }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="measurement-card">
+
+                        <div class="measurement-top">
+
+                            <div class="measurement-name">
+                                Sleeve
+                            </div>
+
+                            <div class="measurement-mark"></div>
+
+                        </div>
+
+                        <div class="measurement-value">
+                            {{ measurement.sleeve }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="measurement-card">
+
+                        <div class="measurement-top">
+
+                            <div class="measurement-name">
+                                Length
+                            </div>
+
+                            <div class="measurement-mark"></div>
+
+                        </div>
+
+                        <div class="measurement-value">
+                            {{ measurement.length }}
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- NOTES -->
+
+                <div class="notes-section">
+
+                    <div class="section-heading">
+
+                        <div class="section-line"></div>
+
+                        <div class="section-title">
+                            Notes
+                        </div>
+
+                    </div>
+
+
+                    <div class="notes-card">
+
+                        <div class="notes-label">
+                            Additional Information
+                        </div>
+
+
+                        {% if measurement.notes %}
+
+                            <div class="notes-text">
+                                {{ measurement.notes }}
+                            </div>
+
+                        {% else %}
+
+                            <div class="notes-text empty-notes">
+                                No notes added for this measurement.
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACTIONS -->
+
+                <div class="actions">
+
+                    <a
+                        href="{% url 'edit_measurement' measurement.id %}"
+                        class="btn edit-btn"
+                    >
+                        ✏ Edit Measurement
+                    </a>
+
+
+                    <a
+                        href="{% url 'delete_measurement' measurement.id %}"
+                        class="btn delete-btn"
+                    >
+                        🗑 Delete Measurement
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-note">
+            Smart Boutique • Smart Tailoring & Boutique
+        </div>
+
+
+    </div>
+
+
+</body>
+
+</html>

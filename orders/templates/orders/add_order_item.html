@@ -1,0 +1,396 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Order Item - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            color: white;
+            padding: 18px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            margin-top: 4px;
+            color: #d8d8d8;
+            font-size: 13px;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 760px;
+            margin: 45px auto;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            color: #5b3a29;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: #5b3a29;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #3f281d;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 22px rgba(0, 0, 0, 0.10);
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 20px 28px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+        .card-header p {
+            margin: 6px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        /* FORM */
+
+        .form-content {
+            padding: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5b3a29;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px 13px;
+            border: 1px solid #d8ccc4;
+            border-radius: 7px;
+            background: #fff;
+            color: #3b2a21;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #8b6a55;
+            box-shadow: 0 0 0 2px rgba(139, 106, 85, 0.10);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* DJANGO ERRORS */
+
+        .error-box {
+            background: #fff0ee;
+            border: 1px solid #e0aaa3;
+            color: #8b3a32;
+            padding: 12px 15px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .errorlist {
+            margin: 5px 0 0;
+            padding-left: 18px;
+            color: #8b3a32;
+            font-size: 13px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 28px;
+        }
+
+        .save-btn,
+        .cancel-btn {
+            flex: 1;
+            padding: 13px 20px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .save-btn {
+            background: #5b3a29;
+            color: white;
+            border: none;
+        }
+
+        .save-btn:hover {
+            background: #3f281d;
+        }
+
+        .cancel-btn {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .cancel-btn:hover {
+            opacity: 0.85;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 16px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .form-content {
+                padding: 22px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="top-bar">
+
+        <div class="page-title">
+            Add Order Item
+        </div>
+
+        <a href="{% url 'order_list' %}" class="back-btn">
+            ← Back to Orders
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <h2>
+                Order Item Information
+            </h2>
+
+            <p>
+                Add a product to this order
+            </p>
+
+        </div>
+
+
+        <div class="form-content">
+
+
+            {% if form.non_field_errors %}
+
+                <div class="error-box">
+                    {{ form.non_field_errors }}
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- PRODUCT -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.product.id_for_label }}">
+                        Product
+                    </label>
+
+                    {{ form.product }}
+
+                    {{ form.product.errors }}
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.quantity.id_for_label }}">
+                        Quantity
+                    </label>
+
+                    {{ form.quantity }}
+
+                    {{ form.quantity.errors }}
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+                    <label for="{{ form.price.id_for_label }}">
+                        Price
+                    </label>
+
+                    {{ form.price }}
+
+                    {{ form.price.errors }}
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="save-btn"
+                    >
+                        + Add Order Item
+                    </button>
+
+                    <a
+                        href="{% url 'order_list' %}"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

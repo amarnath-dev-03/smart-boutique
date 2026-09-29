@@ -1,0 +1,419 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Details - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            color: white;
+            padding: 18px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #e7c98a;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            color: #ddd;
+            margin-top: 4px;
+        }
+
+        /* MAIN */
+
+        .container {
+            max-width: 850px;
+            margin: 45px auto;
+            padding: 0 20px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .page-title {
+            font-size: 28px;
+            font-weight: bold;
+            color: #5b3a29;
+            margin: 0;
+        }
+
+        .back-top {
+            background: #e7c98a;
+            color: #3f281d;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .back-top:hover {
+            opacity: 0.85;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.10);
+            overflow: hidden;
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 20px 25px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .card-header p {
+            margin: 6px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        /* DETAILS */
+
+        .details {
+            padding: 10px 25px 20px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 30px;
+            padding: 19px 5px;
+            border-bottom: 1px solid #eee7e2;
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: bold;
+            color: #6b5143;
+            min-width: 160px;
+        }
+
+        .value {
+            text-align: right;
+            color: #2f2520;
+            font-size: 16px;
+            word-break: break-word;
+        }
+
+        .amount-box {
+            background: #f7f3f0;
+            border-radius: 9px;
+            padding: 8px 14px;
+        }
+
+        .amount {
+            font-size: 22px;
+            font-weight: bold;
+            color: #5b3a29;
+        }
+
+        .category {
+            display: inline-block;
+            background: #f0e3d8;
+            color: #5b3a29;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .description {
+            max-width: 500px;
+            line-height: 1.6;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            padding: 0 25px 25px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 13px 18px;
+            border-radius: 8px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .edit {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .edit:hover {
+            background: #43291d;
+        }
+
+        .back {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .back:hover {
+            opacity: 0.85;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 16px 20px;
+            }
+
+            .brand {
+                font-size: 20px;
+            }
+
+            .container {
+                margin: 25px auto;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .detail-row {
+                flex-direction: column;
+                gap: 7px;
+            }
+
+            .value {
+                text-align: left;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <div>
+            <div class="brand">
+                Smart Boutique
+            </div>
+
+            <div class="subtitle">
+                Smart Tailoring & Boutique
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- MAIN -->
+
+    <div class="container">
+
+        <div class="top-bar">
+
+            <h1 class="page-title">
+                Expense Details
+            </h1>
+
+            <a href="{% url 'expense_list' %}"
+               class="back-top">
+                ← Back to Expenses
+            </a>
+
+        </div>
+
+
+        <!-- CARD -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2>
+                    {{ expense.title }}
+                </h2>
+
+                <p>
+                    Expense Information
+                </p>
+
+            </div>
+
+
+            <div class="details">
+
+                <!-- TITLE -->
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Expense Title
+                    </div>
+
+                    <div class="value">
+                        {{ expense.title }}
+                    </div>
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Category
+                    </div>
+
+                    <div class="value">
+
+                        <span class="category">
+                            {{ expense.category }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- AMOUNT -->
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Amount
+                    </div>
+
+                    <div class="value amount-box">
+
+                        <span class="amount">
+                            ₹{{ expense.amount }}
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Description
+                    </div>
+
+                    <div class="value description">
+
+                        {{ expense.description|default:"No description" }}
+
+                    </div>
+
+                </div>
+
+
+                <!-- DATE -->
+
+                <div class="detail-row">
+
+                    <div class="label">
+                        Created Date
+                    </div>
+
+                    <div class="value">
+
+                        {{ expense.created_at|date:"d-m-Y H:i" }}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a href="{% url 'edit_expense' expense.id %}"
+                   class="btn edit">
+                    ✏ Edit Expense
+                </a>
+
+                <a href="{% url 'expense_list' %}"
+                   class="btn back">
+                    ← Back to List
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+```

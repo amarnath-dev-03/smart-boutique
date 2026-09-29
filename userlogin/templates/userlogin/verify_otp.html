@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Verify OTP - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(
+                135deg,
+                #f7f3f0,
+                #eee4dc
+            );
+
+            min-height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .otp-box {
+            width: 390px;
+
+            background: rgba(255,255,255,0.97);
+
+            padding: 42px 40px;
+
+            border-radius: 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 15px 40px rgba(91,58,41,0.15);
+
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+
+            from {
+                opacity: 0;
+                transform: translateY(15px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .icon-circle {
+
+            width: 70px;
+            height: 70px;
+
+            margin: 0 auto 20px;
+
+            background: #f5eadf;
+
+            border: 1px solid #e7c98a;
+
+            border-radius: 50%;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 30px;
+
+            color: #5b3a29;
+        }
+
+        h2 {
+
+            margin: 0;
+
+            color: #5b3a29;
+
+            font-size: 27px;
+        }
+
+        .subtitle {
+
+            margin-top: 10px;
+            margin-bottom: 28px;
+
+            color: #777;
+
+            font-size: 14px;
+
+            line-height: 1.6;
+        }
+
+        .error {
+
+            margin-bottom: 18px;
+
+            padding: 10px;
+
+            border-radius: 8px;
+
+            background: #fff0ee;
+
+            color: #b3261e;
+
+            font-size: 13px;
+        }
+
+        .otp-input {
+
+            width: 100%;
+
+            padding: 15px;
+
+            border: 1px solid #ddd1c8;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: #333;
+
+            font-size: 24px;
+
+            font-weight: bold;
+
+            letter-spacing: 8px;
+
+            text-align: center;
+
+            outline: none;
+
+            transition: 0.25s ease;
+        }
+
+        .otp-input:focus {
+
+            border-color: #5b3a29;
+
+            box-shadow:
+                0 0 0 3px rgba(91,58,41,0.08);
+        }
+
+        .otp-input::placeholder {
+
+            color: #bbb;
+
+            letter-spacing: 4px;
+        }
+
+        .verify-btn {
+
+            width: 100%;
+
+            margin-top: 20px;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #5b3a29,
+                    #704a35
+                );
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 6px 15px rgba(91,58,41,0.18);
+
+            transition: all 0.25s ease;
+        }
+
+        .verify-btn:hover {
+
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 9px 20px rgba(91,58,41,0.25);
+        }
+
+        .timer {
+
+            margin-top: 15px;
+
+            font-size: 13px;
+
+            color: #888;
+        }
+
+        .timer span {
+
+            color: #5b3a29;
+
+            font-weight: bold;
+        }
+
+        .back-login {
+
+            display: inline-block;
+
+            margin-top: 24px;
+
+            color: #5b3a29;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+        }
+
+        .back-login:hover {
+
+            color: #8b5d42;
+        }
+
+        .footer-text {
+
+            margin-top: 28px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #eee5df;
+
+            color: #aaa;
+
+            font-size: 11px;
+        }
+
+        @media (max-width: 450px) {
+
+            .otp-box {
+
+                width: 100%;
+
+                padding: 35px 25px;
+            }
+
+            h2 {
+
+                font-size: 24px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="otp-box">
+
+        <div class="icon-circle">
+            ✉️
+        </div>
+
+        <h2>Verify OTP</h2>
+
+        <div class="subtitle">
+
+            We have sent a 6-digit OTP to your
+            registered email address.
+
+            <br>
+
+            Enter the OTP below to continue.
+
+        </div>
+
+
+        {% if error %}
+
+            <div class="error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+            <input
+                type="text"
+                name="otp"
+                class="otp-input"
+                placeholder="000000"
+                maxlength="6"
+                inputmode="numeric"
+                pattern="[0-9]{6}"
+                required
+                autocomplete="one-time-code"
+            >
+
+            <button
+                type="submit"
+                class="verify-btn"
+            >
+                Verify OTP
+            </button>
+
+        </form>
+
+
+        <div class="timer">
+
+            OTP valid for
+            <span id="timer">05:00</span>
+
+        </div>
+
+
+        <a
+            href="{% url 'login' %}"
+            class="back-login"
+        >
+            ← Back to Login
+        </a>
+
+
+        <div class="footer-text">
+
+            Smart Boutique · Smart Tailoring & Boutique
+
+        </div>
+
+    </div>
+
+
+    <script>
+
+        let timeLeft = 5 * 60;
+
+        const timerElement =
+            document.getElementById("timer");
+
+
+        const countdown = setInterval(function() {
+
+            let minutes =
+                Math.floor(timeLeft / 60);
+
+            let seconds =
+                timeLeft % 60;
+
+
+            seconds =
+                seconds < 10
+                ? "0" + seconds
+                : seconds;
+
+
+            timerElement.textContent =
+                minutes + ":" + seconds;
+
+
+            if (timeLeft <= 0) {
+
+                clearInterval(countdown);
+
+                timerElement.textContent =
+                    "Expired";
+
+            }
+
+
+            timeLeft--;
+
+        }, 1000);
+
+
+        // Allow numbers only
+
+        document
+            .querySelector(".otp-input")
+            .addEventListener("input", function() {
+
+                this.value =
+                    this.value.replace(/\D/g, '');
+
+            });
+
+    </script>
+
+</body>
+</html>

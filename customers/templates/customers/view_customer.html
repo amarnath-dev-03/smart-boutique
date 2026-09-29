@@ -1,0 +1,459 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Details - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 19px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 950px;
+            margin: 35px auto 60px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            margin: 0;
+            color: #5b3a29;
+            font-size: 27px;
+        }
+
+        .back-btn {
+            background: #5b3a29;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #3f281d;
+        }
+
+        /* PROFILE CARD */
+
+        .profile-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 22px rgba(0, 0, 0, 0.10);
+        }
+
+        .profile-header {
+            background: #5b3a29;
+            color: white;
+            padding: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .avatar {
+            width: 68px;
+            height: 68px;
+            border-radius: 50%;
+            background: #e7c98a;
+            color: #5b3a29;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .profile-header h2 {
+            margin: 0 0 6px;
+            font-size: 23px;
+        }
+
+        .profile-header p {
+            margin: 0;
+            color: #eadfcf;
+            font-size: 13px;
+        }
+
+        /* DETAILS */
+
+        .details {
+            padding: 28px;
+        }
+
+        .section-title {
+            color: #5b3a29;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 18px;
+        }
+
+        .details-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .detail-box {
+            background: #faf7f4;
+            border: 1px solid #e8ddd5;
+            border-radius: 10px;
+            padding: 17px;
+        }
+
+        .label {
+            color: #777;
+            font-size: 12px;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .value {
+            color: #3b2a21;
+            font-size: 15px;
+            font-weight: bold;
+            word-break: break-word;
+        }
+
+        .empty {
+            color: #999;
+            font-style: italic;
+            font-weight: normal;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 25px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 13px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+            text-align: center;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #3f281d;
+        }
+
+        .delete-btn {
+            background: #8b3a32;
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #6f2d27;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+
+            .profile-header {
+                padding: 24px 20px;
+            }
+
+            .details {
+                padding: 20px;
+            }
+
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <div class="top-bar">
+
+        <h1 class="page-title">
+            Customer Details
+        </h1>
+
+        <a
+            href="{% url 'customer_list' %}"
+            class="back-btn"
+        >
+            ← Back to Customers
+        </a>
+
+    </div>
+
+
+    <!-- CUSTOMER CARD -->
+
+    <div class="profile-card">
+
+
+        <div class="profile-header">
+
+            <div class="avatar">
+
+                {{ customer.name|first|upper }}
+
+            </div>
+
+            <div>
+
+                <h2>
+                    {{ customer.name }}
+                </h2>
+
+                <p>
+                    Customer Profile
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="details">
+
+
+            <h3 class="section-title">
+                Customer Information
+            </h3>
+
+
+            <div class="details-grid">
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Customer ID
+                    </div>
+
+                    <div class="value">
+                        #{{ customer.id }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Customer Name
+                    </div>
+
+                    <div class="value">
+                        {{ customer.name }}
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Phone Number
+                    </div>
+
+                    <div class="value">
+
+                        {% if customer.phone %}
+                            {{ customer.phone }}
+                        {% else %}
+                            <span class="empty">
+                                Not provided
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Email
+                    </div>
+
+                    <div class="value">
+
+                        {% if customer.email %}
+                            {{ customer.email }}
+                        {% else %}
+                            <span class="empty">
+                                Not provided
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+                <div class="detail-box">
+
+                    <div class="label">
+                        Address
+                    </div>
+
+                    <div class="value">
+
+                        {% if customer.address %}
+                            {{ customer.address }}
+                        {% else %}
+                            <span class="empty">
+                                Not provided
+                            </span>
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ACTIONS -->
+
+            <div class="actions">
+
+                <a
+                    href="{% url 'edit_customer' customer.id %}"
+                    class="action-btn edit-btn"
+                >
+                    ✏️ Edit Customer
+                </a>
+
+                <a
+                    href="{% url 'delete_customer' customer.id %}"
+                    class="action-btn delete-btn"
+                >
+                    🗑 Delete Customer
+                </a>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

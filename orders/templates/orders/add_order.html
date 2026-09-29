@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Add Order - Smart Boutique</title>
+
+<style>
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background: #f7f3f0;
+    }
+
+    .header {
+        background: #5b3a29;
+        color: white;
+        padding: 20px 40px;
+    }
+
+    .header h1 {
+        margin: 0;
+    }
+
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+    }
+
+    h2 {
+        color: #5b3a29;
+    }
+
+    label {
+        font-weight: bold;
+        display: block;
+        margin-bottom: 8px;
+    }
+
+    input,
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        box-sizing: border-box;
+        font-size: 15px;
+    }
+
+    textarea {
+        height: 100px;
+        resize: vertical;
+    }
+
+    .customer-box {
+        position: relative;
+    }
+
+    #customerSearch {
+        margin-bottom: 0;
+    }
+
+    .suggestions {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #ddd;
+        border-radius: 0 0 8px 8px;
+        max-height: 200px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+    }
+
+    .suggestion {
+        padding: 12px;
+        cursor: pointer;
+        border-bottom: 1px solid #eee;
+    }
+
+    .suggestion:hover {
+        background: #f7f3f0;
+    }
+
+    .customer-name {
+        font-weight: bold;
+        color: #5b3a29;
+    }
+
+    .customer-phone {
+        font-size: 13px;
+        color: #777;
+        margin-top: 3px;
+    }
+
+    .new-customer {
+        margin-top: 15px;
+        padding: 15px;
+        background: #faf7f5;
+        border-radius: 8px;
+        display: none;
+    }
+
+    .new-customer h3 {
+        margin-top: 0;
+        color: #5b3a29;
+    }
+
+    .new-btn {
+        background: white;
+        color: #5b3a29;
+        border: 1px solid #5b3a29;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        margin-bottom: 20px;
+    }
+
+    button {
+        background: #5b3a29;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+    }
+
+    button:hover {
+        background: #43291d;
+    }
+
+    .back {
+        display: inline-block;
+        margin-top: 20px;
+        color: #5b3a29;
+        text-decoration: none;
+    }
+
+    .error {
+        color: #b00020;
+        margin-bottom: 15px;
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<div class="header">
+    <h1>Smart Boutique</h1>
+</div>
+
+<div class="container">
+
+    <h2>Add Order</h2>
+
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST" onsubmit="return validateCustomer()">
+
+        {% csrf_token %}
+
+        <!-- CUSTOMER SEARCH -->
+
+        <label>Customer Name</label>
+
+        <div class="customer-box">
+
+            <input
+                type="text"
+                id="customerSearch"
+                name="customer_name"
+                placeholder="Type customer name..."
+                autocomplete="off"
+                required
+            >
+
+            <div id="suggestions" class="suggestions">
+
+                {% for customer in customers %}
+
+                    <div
+                        class="suggestion"
+                        data-id="{{ customer.id }}"
+                        data-name="{{ customer.name }}"
+                        data-phone="{{ customer.phone }}"
+                    >
+
+                        <div class="customer-name">
+                            {{ customer.name }}
+                        </div>
+
+                        <div class="customer-phone">
+                            {{ customer.phone }}
+                        </div>
+
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- EXISTING CUSTOMER ID -->
+
+        <input
+            type="hidden"
+            name="customer"
+            id="customerId"
+        >
+
+        <!-- NEW CUSTOMER -->
+
+        <button
+            type="button"
+            class="new-btn"
+            onclick="showNewCustomer()"
+        >
+            + Add New Customer
+        </button>
+
+        <div id="newCustomerBox" class="new-customer">
+
+            <h3>New Customer</h3>
+
+            <label>Phone Number</label>
+
+            <input
+                type="text"
+                name="new_customer_phone"
+                id="newCustomerPhone"
+                placeholder="Enter phone number"
+            >
+
+        </div>
+
+        <!-- DESCRIPTION -->
+
+        <label>Description</label>
+
+        <textarea
+            name="description"
+            placeholder="Enter order details"
+        ></textarea>
+
+        <!-- TOTAL AMOUNT -->
+
+        <label>Total Amount</label>
+
+        <input
+            type="number"
+            name="total_amount"
+            step="0.01"
+            min="0"
+            placeholder="Enter amount"
+            required
+        >
+
+        <!-- STATUS -->
+
+        <label>Status</label>
+
+        <select name="status" required>
+
+            <option value="Pending">Pending</option>
+            <option value="Processing">Processing</option>
+            <option value="Completed">Completed</option>
+            <option value="Cancelled">Cancelled</option>
+
+        </select>
+        <center>
+
+        <button type="submit">
+            Save Order
+        </button>
+        </center>
+
+    </form>
+
+    <a href="{% url 'order_list' %}" class="back">
+        ← Back to Orders
+    </a>
+
+</div>
+
+
+<script>
+
+    const searchInput =
+        document.getElementById("customerSearch");
+
+    const customerId =
+        document.getElementById("customerId");
+
+    const suggestions =
+        document.getElementById("suggestions");
+
+    const allCustomers =
+        document.querySelectorAll(".suggestion");
+
+
+    /* SEARCH CUSTOMER */
+
+    searchInput.addEventListener("input", function () {
+
+        const searchText =
+            this.value.toLowerCase().trim();
+
+        customerId.value = "";
+
+        if (searchText === "") {
+
+            suggestions.style.display = "none";
+
+            return;
+        }
+
+        let found = false;
+
+        allCustomers.forEach(function (customer) {
+
+            const name =
+                customer.dataset.name.toLowerCase();
+
+            const phone =
+                customer.dataset.phone.toLowerCase();
+
+            if (
+                name.includes(searchText) ||
+                phone.includes(searchText)
+            ) {
+
+                customer.style.display = "block";
+
+                found = true;
+
+            } else {
+
+                customer.style.display = "none";
+
+            }
+
+        });
+
+        suggestions.style.display =
+            found ? "block" : "none";
+
+    });
+
+
+    /* SELECT CUSTOMER */
+
+    allCustomers.forEach(function (customer) {
+
+        customer.addEventListener("click", function () {
+
+            searchInput.value =
+                this.dataset.name;
+
+            customerId.value =
+                this.dataset.id;
+
+            suggestions.style.display = "none";
+
+        });
+
+    });
+
+
+    /* SHOW NEW CUSTOMER */
+
+    function showNewCustomer() {
+
+        const box =
+            document.getElementById("newCustomerBox");
+
+        box.style.display = "block";
+
+        customerId.value = "";
+
+        searchInput.value = "";
+
+        searchInput.focus();
+
+    }
+
+
+    /* VALIDATE */
+
+    function validateCustomer() {
+
+        const typedName =
+            searchInput.value.trim().toLowerCase();
+
+
+        /* If existing customer already selected */
+
+        if (customerId.value !== "") {
+
+            return true;
+
+        }
+
+
+        /* Check exact customer name */
+
+        let exactCustomer = null;
+
+        allCustomers.forEach(function (customer) {
+
+            const name =
+                customer.dataset.name.trim().toLowerCase();
+
+            if (name === typedName) {
+
+                exactCustomer = customer;
+
+            }
+
+        });
+
+
+        /* Automatically select exact name */
+
+        if (exactCustomer) {
+
+            customerId.value =
+                exactCustomer.dataset.id;
+
+            return true;
+
+        }
+
+
+        /* New customer */
+
+        const phone =
+            document.getElementById("newCustomerPhone").value.trim();
+
+        if (typedName !== "" && phone !== "") {
+
+            return true;
+
+        }
+
+
+        alert(
+            "Please select an existing customer or enter phone number for a new customer."
+        );
+
+        searchInput.focus();
+
+        return false;
+
+    }
+
+
+    /* CLOSE SUGGESTIONS */
+
+    document.addEventListener("click", function (event) {
+
+        if (!event.target.closest(".customer-box")) {
+
+            suggestions.style.display = "none";
+
+        }
+
+    });
+
+</script>
+```
+
+</body>
+
+</html>

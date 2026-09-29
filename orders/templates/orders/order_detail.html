@@ -1,0 +1,581 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Order Details - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 19px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            width: 92%;
+            max-width: 1100px;
+            margin: 35px auto 60px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+            gap: 15px;
+        }
+
+        .page-title {
+            margin: 0;
+            color: #5b3a29;
+            font-size: 27px;
+        }
+
+        .back-btn {
+            background: #5b3a29;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #3f281d;
+        }
+
+        /* GRID */
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.09);
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 17px 22px;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        .card-body {
+            padding: 23px;
+        }
+
+        /* INFO */
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eee5df;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .value {
+            color: #3b2a21;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff1c9;
+            color: #856404;
+        }
+
+        .processing {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* FINANCE */
+
+        .finance-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+
+        .finance-box {
+            border: 1px solid #e8ddd5;
+            background: #faf7f4;
+            border-radius: 10px;
+            padding: 18px;
+            text-align: center;
+        }
+
+        .finance-label {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+
+        .finance-value {
+            color: #5b3a29;
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        /* PAYMENT STATUS */
+
+        .payment-status {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            background: #f7f3f0;
+        }
+
+        .payment-status span {
+            font-weight: bold;
+            color: #5b3a29;
+        }
+
+        /* DESCRIPTION */
+
+        .description {
+            line-height: 1.7;
+            color: #5b514b;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+
+        .empty {
+            color: #999;
+            font-style: italic;
+        }
+
+        /* ACTIONS */
+
+        .actions {
+            margin-top: 22px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 13px;
+            text-align: center;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #5b3a29;
+            color: white;
+        }
+
+        .pdf-btn {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .edit-btn:hover {
+            background: #3f281d;
+        }
+
+        .pdf-btn:hover {
+            opacity: 0.88;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 750px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .container {
+                width: 94%;
+                margin-top: 25px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .page-title {
+                font-size: 23px;
+            }
+
+            .back-btn {
+                text-align: center;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .finance-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- TOP -->
+
+    <div class="top-bar">
+
+        <h1 class="page-title">
+            Order #{{ order.id }} Details
+        </h1>
+
+        <a
+            href="{% url 'order_list' %}"
+            class="back-btn"
+        >
+            ← Back to Orders
+        </a>
+
+    </div>
+
+
+    <!-- INFORMATION -->
+
+    <div class="grid">
+
+
+        <!-- CUSTOMER & ORDER -->
+
+        <div class="card">
+
+            <div class="card-header">
+                Customer & Order Information
+            </div>
+
+            <div class="card-body">
+
+                <div class="info-row">
+
+                    <div class="label">
+                        Order ID
+                    </div>
+
+                    <div class="value">
+                        #{{ order.id }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <div class="label">
+                        Customer
+                    </div>
+
+                    <div class="value">
+                        {{ order.customer.name }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <div class="label">
+                        Order Date
+                    </div>
+
+                    <div class="value">
+                        {{ order.order_date|date:"d-m-Y" }}
+                    </div>
+
+                </div>
+
+
+                <div class="info-row">
+
+                    <div class="label">
+                        Status
+                    </div>
+
+                    <div class="value">
+
+                        {% if order.status == "Pending" %}
+
+                            <span class="status pending">
+                                Pending
+                            </span>
+
+                        {% elif order.status == "Processing" %}
+
+                            <span class="status processing">
+                                Processing
+                            </span>
+
+                        {% elif order.status == "Completed" %}
+
+                            <span class="status completed">
+                                Completed
+                            </span>
+
+                        {% elif order.status == "Cancelled" %}
+
+                            <span class="status cancelled">
+                                Cancelled
+                            </span>
+
+                        {% else %}
+
+                            <span class="status pending">
+                                {{ order.status }}
+                            </span>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESCRIPTION -->
+
+        <div class="card">
+
+            <div class="card-header">
+                Order Description
+            </div>
+
+            <div class="card-body">
+
+                {% if order.description %}
+
+                    <div class="description">
+                        {{ order.description }}
+                    </div>
+
+                {% else %}
+
+                    <div class="empty">
+                        No description added for this order.
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- FINANCIAL SUMMARY -->
+
+    <div class="card" style="margin-top:22px;">
+
+        <div class="card-header">
+            Payment & Financial Summary
+        </div>
+
+        <div class="card-body">
+
+
+            <div class="finance-grid">
+
+
+                <div class="finance-box">
+
+                    <div class="finance-label">
+                        Order Total
+                    </div>
+
+                    <div class="finance-value">
+                        ₹{{ order.total_amount|floatformat:2 }}
+                    </div>
+
+                </div>
+
+
+                <div class="finance-box">
+
+                    <div class="finance-label">
+                        Paid Amount
+                    </div>
+
+                    <div class="finance-value">
+                        ₹{{ paid_amount|floatformat:2 }}
+                    </div>
+
+                </div>
+
+
+                <div class="finance-box">
+
+                    <div class="finance-label">
+                        Balance
+                    </div>
+
+                    <div class="finance-value">
+                        ₹{{ balance_amount|floatformat:2 }}
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="payment-status">
+
+                Payment Status:
+
+                <span>
+                    {{ payment_status }}
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="actions">
+
+        <a
+            href="{% url 'edit_order' order.id %}"
+            class="action-btn edit-btn"
+        >
+            ✏️ Edit Order
+        </a>
+
+        <a
+            href="{% url 'order_invoice' order.id %}"
+            class="action-btn pdf-btn"
+            target="_blank"
+        >
+            📄 View Invoice PDF
+        </a>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

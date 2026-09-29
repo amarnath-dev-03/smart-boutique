@@ -1,0 +1,430 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Order Item - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 20px 40px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .tagline {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* PAGE */
+
+        .page {
+            width: 92%;
+            max-width: 800px;
+            margin: 45px auto;
+        }
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .title {
+            font-size: 26px;
+            font-weight: bold;
+            color: #5b3a29;
+        }
+
+        .back {
+            text-decoration: none;
+            background: #5b3a29;
+            color: white;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            background: #3f281d;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-title {
+            background: #5b3a29;
+            color: white;
+            padding: 22px 30px;
+        }
+
+        .card-title h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .card-title p {
+            margin: 6px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        .form-area {
+            padding: 32px;
+        }
+
+        /* CURRENT ITEM */
+
+        .current-item {
+            background: #f7f3f0;
+            border: 1px solid #e6d9d0;
+            border-radius: 10px;
+            padding: 16px 18px;
+            margin-bottom: 25px;
+        }
+
+        .current-label {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        .current-product {
+            color: #5b3a29;
+            font-size: 17px;
+            font-weight: bold;
+        }
+
+        /* FORM */
+
+        .field {
+            margin-bottom: 21px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5b3a29;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        select {
+            width: 100%;
+            height: 46px;
+            padding: 0 13px;
+            border: 1px solid #d5c8bf;
+            border-radius: 8px;
+            background: white;
+            color: #3b2a21;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #8b6a55;
+            box-shadow: 0 0 0 3px rgba(139, 106, 85, 0.10);
+        }
+
+        /* ERRORS */
+
+        .errors {
+            background: #fff1ef;
+            border: 1px solid #dfaaa3;
+            color: #8b3a32;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+
+        .errorlist {
+            margin: 5px 0 0;
+            padding-left: 20px;
+            color: #8b3a32;
+            font-size: 13px;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .update {
+            flex: 1;
+            border: none;
+            border-radius: 8px;
+            padding: 14px;
+            background: #5b3a29;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .update:hover {
+            background: #3f281d;
+        }
+
+        .cancel {
+            flex: 1;
+            border-radius: 8px;
+            padding: 14px;
+            background: #e7c98a;
+            color: #3f281d;
+            text-decoration: none;
+            text-align: center;
+            font-size: 15px;
+            font-weight: bold;
+        }
+
+        .cancel:hover {
+            opacity: 0.88;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .page {
+                width: 94%;
+                margin: 30px auto;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .form-area {
+                padding: 22px 20px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="tagline">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- PAGE -->
+
+<div class="page">
+
+
+    <div class="top-section">
+
+        <div class="title">
+            Edit Order Item
+        </div>
+
+        <a href="{% url 'order_list' %}" class="back">
+            ← Back to Orders
+        </a>
+
+    </div>
+
+
+    <div class="card">
+
+
+        <div class="card-title">
+
+            <h2>
+                Update Order Item
+            </h2>
+
+            <p>
+                Modify the product, quantity or price
+            </p>
+
+        </div>
+
+
+        <div class="form-area">
+
+
+            {% if form.non_field_errors %}
+
+                <div class="errors">
+                    {{ form.non_field_errors }}
+                </div>
+
+            {% endif %}
+
+
+            <!-- CURRENT PRODUCT -->
+
+            {% if item %}
+
+                <div class="current-item">
+
+                    <div class="current-label">
+                        Current Product
+                    </div>
+
+                    <div class="current-product">
+                        {{ item.product.name }}
+                    </div>
+
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- PRODUCT -->
+
+                <div class="field">
+
+                    <label for="{{ form.product.id_for_label }}">
+                        Product
+                    </label>
+
+                    {{ form.product }}
+
+                    {{ form.product.errors }}
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="field">
+
+                    <label for="{{ form.quantity.id_for_label }}">
+                        Quantity
+                    </label>
+
+                    {{ form.quantity }}
+
+                    {{ form.quantity.errors }}
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="field">
+
+                    <label for="{{ form.price.id_for_label }}">
+                        Price
+                    </label>
+
+                    {{ form.price }}
+
+                    {{ form.price.errors }}
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="update"
+                    >
+                        ✓ Update Order Item
+                    </button>
+
+                    <a
+                        href="{% url 'order_list' %}"
+                        class="cancel"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+</body>
+
+</html>
+```

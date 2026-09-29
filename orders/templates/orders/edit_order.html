@@ -1,0 +1,714 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Order - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f7f3f0;
+            color: #3b2a21;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #211c19;
+            padding: 18px 35px;
+        }
+
+        .brand {
+            color: #e7c98a;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: #d8d8d8;
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 92%;
+            max-width: 820px;
+            margin: 40px auto 60px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .page-title {
+            color: #5b3a29;
+            font-size: 27px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            background: #5b3a29;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #3f281d;
+        }
+
+        /* CARD */
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.11);
+        }
+
+        .card-header {
+            background: #5b3a29;
+            color: white;
+            padding: 23px 30px;
+        }
+
+        .card-header h2 {
+            margin: 0;
+            font-size: 21px;
+        }
+
+        .card-header p {
+            margin: 6px 0 0;
+            color: #e7c98a;
+            font-size: 13px;
+        }
+
+        /* FORM */
+
+        .form-content {
+            padding: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 21px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #5b3a29;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 13px 14px;
+            border: 1px solid #d7cbc3;
+            border-radius: 8px;
+            background: white;
+            color: #3b2a21;
+            font-size: 15px;
+            outline: none;
+        }
+
+        input,
+        select {
+            height: 46px;
+        }
+
+        textarea {
+            min-height: 105px;
+            resize: vertical;
+            line-height: 1.5;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #8b6a55;
+            box-shadow: 0 0 0 3px rgba(139, 106, 85, 0.10);
+        }
+
+        /* READONLY */
+
+        .readonly {
+            background: #f3efec;
+            color: #6b5c53;
+            cursor: not-allowed;
+        }
+
+        /* ERROR */
+
+        .error-box {
+            background: #fff0ee;
+            border: 1px solid #dfaaa3;
+            color: #8b3a32;
+            padding: 13px 16px;
+            border-radius: 8px;
+            margin-bottom: 22px;
+            font-size: 14px;
+        }
+
+        /* ORDER SUMMARY */
+
+        .summary {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 8px;
+        }
+
+        .summary-box {
+            background: #f7f3f0;
+            border: 1px solid #e6dad2;
+            border-radius: 9px;
+            padding: 15px;
+        }
+
+        .summary-label {
+            font-size: 12px;
+            color: #777;
+            margin-bottom: 6px;
+        }
+
+        .summary-value {
+            font-size: 19px;
+            font-weight: bold;
+            color: #5b3a29;
+        }
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+        }
+
+        .update-btn,
+        .cancel-btn {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 8px;
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .update-btn {
+            background: #5b3a29;
+            color: white;
+            border: none;
+        }
+
+        .update-btn:hover {
+            background: #3f281d;
+        }
+
+        .cancel-btn {
+            background: #e7c98a;
+            color: #3f281d;
+        }
+
+        .cancel-btn:hover {
+            opacity: 0.88;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .header {
+                padding: 17px 20px;
+            }
+
+            .brand {
+                font-size: 21px;
+            }
+
+            .container {
+                width: 94%;
+                margin: 30px auto 45px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .form-content {
+                padding: 23px 20px;
+            }
+
+            .summary {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- HEADER -->
+
+<div class="header">
+
+    <div class="brand">
+        Smart Boutique
+    </div>
+
+    <div class="subtitle">
+        Smart Tailoring & Boutique
+    </div>
+
+</div>
+
+
+<!-- MAIN -->
+
+<div class="container">
+
+
+    <!-- TOP BAR -->
+
+    <div class="top-bar">
+
+        <div class="page-title">
+            Edit Order
+        </div>
+
+        <a
+            href="{% url 'order_list' %}"
+            class="back-btn"
+        >
+            ← Back to Orders
+        </a>
+
+    </div>
+
+
+    <!-- CARD -->
+
+    <div class="card">
+
+
+        <div class="card-header">
+
+            <h2>
+                Order Information
+            </h2>
+
+            <p>
+                Update customer, product and order details
+            </p>
+
+        </div>
+
+
+        <div class="form-content">
+
+
+            {% if error %}
+
+                <div class="error-box">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                {% csrf_token %}
+
+
+                <!-- CUSTOMER -->
+
+                <div class="form-group">
+
+                    <label for="customer_name">
+                        Customer Name
+                    </label>
+
+                    <input
+                        type="text"
+                        name="customer_name"
+                        id="customer_name"
+                        value="{{ order.customer.name }}"
+                        list="customer_list"
+                        placeholder="Select or type customer name"
+                        required
+                    >
+
+                    <datalist id="customer_list">
+
+                        {% for customer in customers %}
+
+                            <option value="{{ customer.name }}">
+
+                        {% endfor %}
+
+                    </datalist>
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="form-group">
+
+                    <label for="description">
+                        Description
+                    </label>
+
+                    <textarea
+                        name="description"
+                        id="description"
+                        placeholder="Enter order description..."
+                    >{{ order.description }}</textarea>
+
+                </div>
+
+
+                <!-- PRODUCT -->
+
+                <div class="form-group">
+
+                    <label for="product">
+                        Product
+                    </label>
+
+                    <select
+                        name="product"
+                        id="product"
+                        required
+                    >
+
+                        <option value="">
+                            -- Select Product --
+                        </option>
+
+                        {% for product in products %}
+
+                            <option
+                                value="{{ product.id }}"
+                                data-price="{{ product.price }}"
+                                {% if item and item.product.id == product.id %}
+                                    selected
+                                {% endif %}
+                            >
+                                {{ product.name }}
+                            </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- PRICE -->
+
+                <div class="form-group">
+
+                    <label for="price">
+                        Product Price
+                    </label>
+
+                    <input
+                        type="number"
+                        id="price"
+                        value="{% if item %}{{ item.price }}{% else %}0{% endif %}"
+                        step="0.01"
+                        readonly
+                        class="readonly"
+                    >
+
+                </div>
+
+
+                <!-- QUANTITY -->
+
+                <div class="form-group">
+
+                    <label for="quantity">
+                        Quantity
+                    </label>
+
+                    <input
+                        type="number"
+                        name="quantity"
+                        id="quantity"
+                        value="{% if item %}{{ item.quantity }}{% else %}1{% endif %}"
+                        min="1"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TOTAL -->
+
+                <div class="form-group">
+
+                    <label for="total_amount">
+                        Total Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="total_amount"
+                        id="total_amount"
+                        value="{{ order.total_amount }}"
+                        step="0.01"
+                        min="0"
+                        readonly
+                        class="readonly"
+                    >
+
+                </div>
+
+
+                <!-- STATUS -->
+
+                <div class="form-group">
+
+                    <label for="status">
+                        Order Status
+                    </label>
+
+                    <select
+                        name="status"
+                        id="status"
+                        required
+                    >
+
+                        <option
+                            value="Pending"
+                            {% if order.status == "Pending" %}
+                                selected
+                            {% endif %}
+                        >
+                            Pending
+                        </option>
+
+                        <option
+                            value="Processing"
+                            {% if order.status == "Processing" %}
+                                selected
+                            {% endif %}
+                        >
+                            Processing
+                        </option>
+
+                        <option
+                            value="Completed"
+                            {% if order.status == "Completed" %}
+                                selected
+                            {% endif %}
+                        >
+                            Completed
+                        </option>
+
+                        <option
+                            value="Cancelled"
+                            {% if order.status == "Cancelled" %}
+                                selected
+                            {% endif %}
+                        >
+                            Cancelled
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- SUMMARY -->
+
+                <div class="summary">
+
+                    <div class="summary-box">
+
+                        <div class="summary-label">
+                            Product Price
+                        </div>
+
+                        <div class="summary-value">
+                            ₹<span id="summary-price">0.00</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="summary-box">
+
+                        <div class="summary-label">
+                            Order Total
+                        </div>
+
+                        <div class="summary-value">
+                            ₹<span id="summary-total">0.00</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="buttons">
+
+                    <button
+                        type="submit"
+                        class="update-btn"
+                    >
+                        ✓ Update Order
+                    </button>
+
+                    <a
+                        href="{% url 'order_list' %}"
+                        class="cancel-btn"
+                    >
+                        Cancel
+                    </a>
+
+                </div>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- AUTOMATIC PRICE & TOTAL -->
+
+<script>
+
+    const productSelect =
+        document.getElementById("product");
+
+    const priceInput =
+        document.getElementById("price");
+
+    const quantityInput =
+        document.getElementById("quantity");
+
+    const totalInput =
+        document.getElementById("total_amount");
+
+    const summaryPrice =
+        document.getElementById("summary-price");
+
+    const summaryTotal =
+        document.getElementById("summary-total");
+
+
+    function updatePriceAndTotal() {
+
+        const selectedOption =
+            productSelect.options[
+                productSelect.selectedIndex
+            ];
+
+
+        if (!selectedOption) {
+            return;
+        }
+
+
+        const price =
+            parseFloat(
+                selectedOption.getAttribute("data-price")
+            ) || 0;
+
+
+        const quantity =
+            parseInt(
+                quantityInput.value
+            ) || 1;
+
+
+        priceInput.value =
+            price.toFixed(2);
+
+
+        totalInput.value =
+            (price * quantity).toFixed(2);
+
+
+        summaryPrice.textContent =
+            price.toFixed(2);
+
+
+        summaryTotal.textContent =
+            (price * quantity).toFixed(2);
+
+    }
+
+
+    productSelect.addEventListener(
+        "change",
+        updatePriceAndTotal
+    );
+
+
+    quantityInput.addEventListener(
+        "input",
+        updatePriceAndTotal
+    );
+
+
+    updatePriceAndTotal();
+
+</script>
+
+
+</body>
+
+</html>
+```

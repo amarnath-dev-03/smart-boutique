@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Expenses - Smart Boutique</title>
+
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: #f7f3f0;
+        color: #3b2a21;
+    }
+
+    .header {
+        background: #211c19;
+        padding: 19px 35px;
+    }
+
+    .brand {
+        color: #e7c98a;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .subtitle {
+        color: #d8d8d8;
+        font-size: 13px;
+        margin-top: 4px;
+    }
+
+    .container {
+        width: 94%;
+        max-width: 1200px;
+        margin: 35px auto 60px;
+    }
+
+    .top-bar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 22px;
+    }
+
+    .title-section h1 {
+        margin: 0;
+        color: #5b3a29;
+        font-size: 28px;
+    }
+
+    .title-section p {
+        margin: 6px 0 0;
+        color: #777;
+        font-size: 13px;
+    }
+
+    .top-actions {
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn {
+        padding: 11px 17px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+        display: inline-block;
+    }
+
+    .dashboard-btn {
+        background: #e7c98a;
+        color: #3f281d;
+    }
+
+    .add-btn {
+        background: #5b3a29;
+        color: white;
+    }
+
+    .btn:hover {
+        opacity: 0.88;
+    }
+
+    .search-card {
+        background: white;
+        padding: 18px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+        margin-bottom: 22px;
+    }
+
+    .search-form {
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-input {
+        flex: 1;
+        padding: 12px 14px;
+        border: 1px solid #d8ccc4;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        color: #3b2a21;
+    }
+
+    .search-input:focus {
+        border-color: #5b3a29;
+        box-shadow: 0 0 0 2px rgba(91, 58, 41, 0.08);
+    }
+
+    .search-btn {
+        background: #5b3a29;
+        color: white;
+        border: none;
+        padding: 12px 21px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .clear-btn {
+        background: #e7c98a;
+        color: #3f281d;
+        padding: 12px 18px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 13px;
+        font-weight: bold;
+    }
+
+    .table-card {
+        background: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.10);
+    }
+
+    .table-header {
+        background: #5b3a29;
+        color: white;
+        padding: 19px 22px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .table-header h2 {
+        margin: 0;
+        font-size: 19px;
+    }
+
+    .count {
+        background: #e7c98a;
+        color: #3f281d;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 950px;
+    }
+
+    th {
+        background: #f3ede8;
+        color: #5b3a29;
+        padding: 14px 13px;
+        text-align: left;
+        font-size: 12px;
+        text-transform: uppercase;
+        white-space: nowrap;
+    }
+
+    td {
+        padding: 15px 13px;
+        border-bottom: 1px solid #eee5df;
+        font-size: 13px;
+        vertical-align: middle;
+    }
+
+    tbody tr:hover {
+        background: #fcfaf8;
+    }
+
+    .id {
+        color: #5b3a29;
+        font-weight: bold;
+    }
+
+    .expense-title {
+        color: #3b2a21;
+        font-weight: bold;
+    }
+
+    .category {
+        display: inline-block;
+        background: #f3ede8;
+        color: #5b3a29;
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .amount {
+        color: #8b3a32;
+        font-weight: bold;
+        font-size: 14px;
+    }
+
+    .description {
+        max-width: 250px;
+        color: #777;
+        line-height: 1.5;
+    }
+
+    .date {
+        color: #6b5a50;
+        white-space: nowrap;
+    }
+
+    .actions {
+        display: flex;
+        gap: 6px;
+        white-space: nowrap;
+    }
+
+    .action {
+        padding: 7px 10px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: bold;
+    }
+
+    .view {
+        background: #e7c98a;
+        color: #3f281d;
+    }
+
+    .edit {
+        background: #5b3a29;
+        color: white;
+    }
+
+    .delete {
+        background: #8b3a32;
+        color: white;
+    }
+
+    .action:hover {
+        opacity: 0.82;
+    }
+
+    .empty {
+        text-align: center;
+        padding: 60px 20px;
+        color: #888;
+    }
+
+    .empty-icon {
+        font-size: 45px;
+        margin-bottom: 12px;
+    }
+
+    .empty h3 {
+        color: #5b3a29;
+        margin: 0 0 7px;
+        font-size: 19px;
+    }
+
+    .empty p {
+        margin: 0;
+        font-size: 13px;
+    }
+
+    @media (max-width: 700px) {
+
+        .header {
+            padding: 17px 20px;
+        }
+
+        .brand {
+            font-size: 21px;
+        }
+
+        .container {
+            width: 94%;
+            margin-top: 25px;
+        }
+
+        .top-bar {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .title-section h1 {
+            font-size: 24px;
+        }
+
+        .top-actions {
+            flex-direction: column;
+        }
+
+        .btn {
+            text-align: center;
+        }
+
+        .search-form {
+            flex-direction: column;
+        }
+
+        .search-btn,
+        .clear-btn {
+            text-align: center;
+        }
+
+        .table-header {
+            padding: 17px;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+<div class="header">
+
+```
+<div class="brand">
+    Smart Boutique
+</div>
+
+<div class="subtitle">
+    Smart Tailoring & Boutique
+</div>
+```
+
+</div>
+
+<div class="container">
+
+```
+<div class="top-bar">
+
+    <div class="title-section">
+
+        <h1>
+            Expenses
+        </h1>
+
+        <p>
+            Manage boutique expenses and business spending
+        </p>
+
+    </div>
+
+
+    <div class="top-actions">
+
+        <a
+            href="/"
+            class="btn dashboard-btn"
+        >
+            🏠 Dashboard
+        </a>
+
+        <a
+            href="{% url 'add_expense' %}"
+            class="btn add-btn"
+        >
+            + Add Expense
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="search-card">
+
+    <form
+        method="GET"
+        class="search-form"
+    >
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search|default:'' }}"
+            placeholder="Search expense by title, category or description..."
+            class="search-input"
+        >
+
+        <button
+            type="submit"
+            class="search-btn"
+        >
+            🔍 Search
+        </button>
+
+        {% if search %}
+
+            <a
+                href="{% url 'expense_list' %}"
+                class="clear-btn"
+            >
+                Clear
+            </a>
+
+        {% endif %}
+
+    </form>
+
+</div>
+
+
+<div class="table-card">
+
+
+    <div class="table-header">
+
+        <h2>
+            Expense List
+        </h2>
+
+        <span class="count">
+            {{ expenses|length }} Expenses
+        </span>
+
+    </div>
+
+
+    {% if expenses %}
+
+    <div class="table-wrapper">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Expense</th>
+                    <th>Category</th>
+                    <th>Amount</th>
+                    <th>Description</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for expense in expenses %}
+
+                <tr>
+
+
+                    <td>
+
+                        <span class="id">
+                            #{{ expense.id }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="expense-title">
+                            {{ expense.title }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="category">
+                            {{ expense.category }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="amount">
+                            ₹{{ expense.amount|floatformat:2 }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="description">
+
+                            {% if expense.description %}
+
+                                {{ expense.description }}
+
+                            {% else %}
+
+                                -
+
+                            {% endif %}
+
+                        </div>
+
+                    </td>
+
+
+                    <td>
+
+                        <span class="date">
+                            {{ expense.created_at|date:"d-m-Y" }}
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <div class="actions">
+
+                            <a
+                                href="{% url 'expense_detail' expense.id %}"
+                                class="action view"
+                            >
+                                View
+                            </a>
+
+                            <a
+                                href="{% url 'edit_expense' expense.id %}"
+                                class="action edit"
+                            >
+                                Edit
+                            </a>
+
+                            <a
+                                href="{% url 'delete_expense' expense.id %}"
+                                class="action delete"
+                            >
+                                Delete
+                            </a>
+
+                        </div>
+
+                    </td>
+
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <div class="empty-icon">
+                💰
+            </div>
+
+            <h3>
+                No Expenses Found
+            </h3>
+
+            <p>
+                Add your first expense to see it here.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+</div>
+
+
+</div>
+
+</body>
+
+</html>

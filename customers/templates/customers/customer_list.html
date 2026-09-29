@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Customers - Smart Boutique</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f3f0;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #5b3a29;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            padding: 40px;
+        }
+
+        /* TOP BAR */
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top-bar h2 {
+            color: #5b3a29;
+            margin: 0;
+        }
+
+        /* TOP ACTIONS */
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .add-btn {
+            background: #5b3a29;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .add-btn:hover {
+            background: #3f281d;
+            transform: translateY(-2px);
+        }
+
+        .back-btn {
+            background: #f0ebe7;
+            color: #5b3a29;
+            padding: 12px 16px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .back-btn:hover {
+            background: #5b3a29;
+            color: white;
+            transform: translateX(-3px);
+        }
+
+        /* SEARCH BOX */
+
+        .search-box {
+            background: white;
+            padding: 20px;
+            margin-bottom: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .search-box form {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .search-box input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #5b3a29;
+        }
+
+        .search-btn {
+            background: #5b3a29;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .search-btn:hover {
+            background: #3f281d;
+        }
+
+        .clear-btn {
+            background: #777;
+            color: white;
+            padding: 12px 18px;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+
+        .clear-btn:hover {
+            background: #555;
+        }
+
+        /* TABLE */
+
+        .table-box {
+            background: white;
+            border-radius: 12px;
+            overflow-x: auto;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background: #5b3a29;
+            color: white;
+        }
+
+        tr:hover {
+            background: #faf7f5;
+        }
+
+        /* ACTIONS */
+
+        .action-link {
+            color: #5b3a29;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .action-link:hover {
+            text-decoration: underline;
+        }
+
+        .view-link {
+            color: #2874a6;
+        }
+
+        .edit-link {
+            color: #5b3a29;
+        }
+
+        .delete-link {
+            color: #c0392b;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                padding: 20px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-actions {
+                width: 100%;
+                gap: 8px;
+            }
+
+            .add-btn,
+            .back-btn {
+                flex: 1;
+                text-align: center;
+            }
+
+            .search-box form {
+                flex-direction: column;
+            }
+
+            .search-box input,
+            .search-box button,
+            .search-box a {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <div class="header">
+
+        <h1>Smart Tailoring & Boutique</h1>
+
+    </div>
+
+
+    <div class="container">
+
+
+        <!-- PAGE HEADER -->
+
+        <div class="top-bar">
+
+            <h2>Customers</h2>
+
+
+            <div class="top-actions">
+
+                <a
+                    href="{% url 'add_customer' %}"
+                    class="add-btn"
+                >
+                    + Add Customer
+                </a>
+
+                <a
+                    href="{% url 'home' %}"
+                    class="back-btn"
+                >
+                    ← Back to Dashboard
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <!-- SEARCH BOX -->
+
+        <div class="search-box">
+
+            <form method="GET">
+
+                <input
+                    type="text"
+                    name="search"
+                    placeholder="Search customer name, phone or email..."
+                    value="{{ search }}"
+                >
+
+                <button
+                    type="submit"
+                    class="search-btn"
+                >
+                    🔎 Search
+                </button>
+
+                {% if search %}
+
+                    <a
+                        href="{% url 'customer_list' %}"
+                        class="clear-btn"
+                    >
+                        Clear
+                    </a>
+
+                {% endif %}
+
+            </form>
+
+        </div>
+
+
+        <!-- CUSTOMER TABLE -->
+
+        <div class="table-box">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for customer in customers %}
+
+                    <tr>
+
+                        <td>
+                            {{ customer.name }}
+                        </td>
+
+                        <td>
+                            {{ customer.phone }}
+                        </td>
+
+                        <td>
+                            {{ customer.email }}
+                        </td>
+
+                        <td>
+                            {{ customer.address }}
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="{% url 'view_customer' customer.id %}"
+                                class="action-link view-link"
+                            >
+                                👁 View
+                            </a>
+
+                            &nbsp;|&nbsp;
+
+                            <a
+                                href="{% url 'edit_customer' customer.id %}"
+                                class="action-link edit-link"
+                            >
+                                ✏ Edit
+                            </a>
+
+                            &nbsp;|&nbsp;
+
+                            <a
+                                href="{% url 'delete_customer' customer.id %}"
+                                class="action-link delete-link"
+                            >
+                                🗑 Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td
+                            colspan="5"
+                            class="empty"
+                        >
+                            No customers found.
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
