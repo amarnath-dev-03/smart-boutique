@@ -1,3 +1,4 @@
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -7,6 +8,90 @@ from django.contrib.auth.hashers import make_password
 
 import random
 from datetime import datetime, timedelta
+import os
+import requests
+
+
+# ==============================
+# BREVO EMAIL
+# ==============================
+
+def send_brevo_email(to_email, otp):
+
+    api_key = os.environ.get('BREVO_API_KEY')
+
+    sender_email = os.environ.get(
+        'SMART_BOUTIQUE_GMAIL',
+        settings.DEFAULT_FROM_EMAIL
+    )
+
+    url = 'https://api.brevo.com/v3/smtp/email'
+
+    headers = {
+        'accept': 'application/json',
+        'api-key': api_key,
+        'content-type': 'application/json',
+    }
+
+    data = {
+        'sender': {
+            'name': 'Smart Boutique',
+            'email': sender_email,
+        },
+        'to': [
+            {
+                'email': to_email,
+            }
+        ],
+        'subject': 'Smart Boutique - Password Reset OTP',
+        'textContent': (
+            f'Your Smart Boutique password reset OTP is: {otp}\n\n'
+            'This OTP is valid for 5 minutes.\n'
+            'Do not share this OTP with anyone.'
+        ),
+        'htmlContent': f'''
+            <div style="font-family: Arial, sans-serif; padding: 20px;">
+                <h2 style="color:#5b3a29;">
+                    Smart Boutique
+                </h2>
+
+                <p>Your password reset OTP is:</p>
+
+                <div style="
+                    font-size: 30px;
+                    font-weight: bold;
+                    letter-spacing: 6px;
+                    color: #5b3a29;
+                    margin: 20px 0;
+                ">
+                    {otp}
+                </div>
+
+                <p>
+                    This OTP is valid for <strong>5 minutes</strong>.
+                </p>
+
+                <p>
+                    Do not share this OTP with anyone.
+                </p>
+
+                <hr>
+
+                <p style="color:#777;">
+                    Smart Tailoring & Boutique
+                </p>
+            </div>
+        ''',
+    }
+
+    response = requests.post(
+        url,
+        headers=headers,
+        json=data,
+        timeout=20,
+    )
+
+    response.raise_for_status()
 
 
 # ==============================
@@ -80,20 +165,55 @@ def forgot_password(request):
         request.session['reset_otp'] = otp
         request.session['otp_created_at'] = datetime.now().isoformat()
 
-        # Send OTP
-        send_mail(
-            'Smart Boutique - Password Reset OTP',
-            f'Your Smart Boutique password reset OTP is: {otp}\n\n'
-            'This OTP is valid for 5 minutes.\n'
-            'Do not share this OTP with anyone.',
-            settings.DEFAULT_FROM_EMAIL,
-            [user.email],
-            fail_silently=False,
-        )
+        # ==============================
+        # SEND OTP
+        # ==============================
+
+        try:
+
+            # If Brevo API key exists,
+            # use Brevo API.
+            if os.environ.get('BREVO_API_KEY'):
+
+                send_brevo_email(
+                    user.email,
+                    otp
+                )
+
+            # Otherwise use existing Gmail SMTP.
+            else:
+
+                send_mail(
+                    'Smart Boutique - Password Reset OTP',
+
+                    f'Your Smart Boutique password reset OTP is: {otp}\n\n'
+                    'This OTP is valid for 5 minutes.\n'
+                    'Do not share this OTP with anyone.',
+
+                    settings.DEFAULT_FROM_EMAIL,
+
+                    [user.email],
+
+                    fail_silently=False,
+                )
+
+        except Exception:
+
+            return render(
+                request,
+                'userlogin/forgot_password.html',
+                {
+                    'error':
+                    'Unable to send OTP email. Please try again later.'
+                }
+            )
 
         return redirect('verify_otp')
 
-    return render(request, 'userlogin/forgot_password.html')
+    return render(
+        request,
+        'userlogin/forgot_password.html'
+    )
 
 
 # ==============================
@@ -115,15 +235,22 @@ def verify_otp(request):
         # Check OTP expiry
         if created_at:
 
-            created_time = datetime.fromisoformat(created_at)
+            created_time = datetime.fromisoformat(
+                created_at
+            )
 
             if datetime.now() - created_time > timedelta(minutes=5):
 
                 request.session.flush()
 
-                return render(request, 'userlogin/verify_otp.html', {
-                    'error': 'OTP expired. Please request a new OTP.'
-                })
+                return render(
+                    request,
+                    'userlogin/verify_otp.html',
+                    {
+                        'error':
+                        'OTP expired. Please request a new OTP.'
+                    }
+                )
 
         # Check OTP
         if entered_otp == saved_otp:
@@ -132,11 +259,19 @@ def verify_otp(request):
 
             return redirect('reset_password')
 
-        return render(request, 'userlogin/verify_otp.html', {
-            'error': 'Invalid OTP. Please try again.'
-        })
+        return render(
+            request,
+            'userlogin/verify_otp.html',
+            {
+                'error':
+                'Invalid OTP. Please try again.'
+            }
+        )
 
-    return render(request, 'userlogin/verify_otp.html')
+    return render(
+        request,
+        'userlogin/verify_otp.html'
+    )
 
 
 # ==============================
@@ -152,34 +287,53 @@ def reset_password(request):
     user_id = request.session.get('reset_user_id')
 
     try:
-        user = User.objects.get(id=user_id)
+
+        user = User.objects.get(
+            id=user_id
+        )
 
     except User.DoesNotExist:
 
         request.session.flush()
+
         return redirect('forgot_password')
 
     if request.method == 'POST':
 
         password = request.POST.get('password')
-        confirm_password = request.POST.get('confirm_password')
+        confirm_password = request.POST.get(
+            'confirm_password'
+        )
 
         # Password match
         if password != confirm_password:
 
-            return render(request, 'userlogin/reset_password.html', {
-                'error': 'Passwords do not match.'
-            })
+            return render(
+                request,
+                'userlogin/reset_password.html',
+                {
+                    'error':
+                    'Passwords do not match.'
+                }
+            )
 
         # Minimum password length
         if len(password) < 8:
 
-            return render(request, 'userlogin/reset_password.html', {
-                'error': 'Password must contain at least 8 characters.'
-            })
+            return render(
+                request,
+                'userlogin/reset_password.html',
+                {
+                    'error':
+                    'Password must contain at least 8 characters.'
+                }
+            )
 
         # Change password
-        user.password = make_password(password)
+        user.password = make_password(
+            password
+        )
+
         user.save()
 
         # Clear reset session
@@ -187,4 +341,8 @@ def reset_password(request):
 
         return redirect('login')
 
-    return render(request, 'userlogin/reset_password.html')
+    return render(
+        request,
+        'userlogin/reset_password.html'
+    )
+
