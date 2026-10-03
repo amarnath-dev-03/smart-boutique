@@ -317,6 +317,38 @@ smart-boutique
 ```text
 smart-boutique-db
 ```
+## 📸 Screenshots
+
+### 🔐 Login
+![Login Page](screenshots/login.png)
+
+### 📊 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### 👥 Customers
+![Customers](screenshots/customers.png)
+
+### 📏 Measurements
+![Measurements](screenshots/measurements.png)
+
+### 👕 Products
+![Products](screenshots/products.png)
+
+### 📦 Inventory
+![Inventory](screenshots/inventory.png)
+
+### 🧾 Orders
+![Orders](screenshots/orders.png)
+
+### 💳 Payments
+![Payments](screenshots/payments.png)
+
+### 💰 Expenses
+![Expenses](screenshots/expenses.png)
+
+### 📄 Invoice
+![Invoice](screenshots/invoice.png)
+
 
 ## 📱 Responsive Design
 
