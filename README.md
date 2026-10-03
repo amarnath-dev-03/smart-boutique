@@ -1,36 +1,35 @@
-"" 🧵 Smart Boutique""
+# 🧵 Smart Boutique
 
-" Smart Tailoring & Boutique Management System "
+## Smart Tailoring & Boutique Management System
 
 **Smart Boutique** is a full-stack Django web application designed to help tailoring and boutique businesses manage their daily operations from a single platform.
 
 The system provides modules for customer management, measurements, products, inventory, orders, payments, expenses, invoices, dashboards, and business reports.
 
-
-
- 🌐 Live Demo
+## 🌐 Live Demo
 
 **Live Website:**
-https://smart-boutique-29cq.onrender.com
+https://smart-boutique-29cq.onrender.com/
 
 **GitHub Repository:**
 https://github.com/amarnath-dev-03/smart-boutique
 
 > The application is deployed using Render with PostgreSQL as the production database.
 
+## ✨ Features
 
-✨ Features 
-
-🔐 Authentication
+### 🔐 Authentication
 
 * User Login & Logout
+* Password visibility toggle
 * Forgot Password
 * Email OTP verification
 * OTP expiry validation
 * Password reset
+* Protected dashboard access
 * Secure password hashing
 
-👥 Customer Management
+### 👥 Customer Management
 
 * Add customers
 * View customer details
@@ -38,147 +37,154 @@ https://github.com/amarnath-dev-03/smart-boutique
 * Delete customers
 * Search customers
 
-📏 Measurement Management
+### 📏 Measurement Management
 
 * Add customer measurements
 * View measurement details
 * Edit measurements
 * Delete measurements
 * Search measurements
+* Connect measurements with customers
 
-👕 Product Management
+### 👕 Product Management
 
 * Add products
+* View product details
 * Edit products
 * Delete products
-* View product details
 * Product categories
 * Product pricing
-* Stock management
 
-📦 Inventory Management
+### 📦 Inventory Management
 
 * Add inventory items
+* View inventory details
 * Edit inventory
 * Delete inventory
 * Search inventory
 * Stock tracking
-* Product and inventory synchronization
 
-🧾 Order Management
+### 🧾 Order Management
 
 * Create orders
 * Edit orders
-* Delete orders
 * View order details
 * Manage order items
+* Edit order items
+* Delete order items
 * Automatic item totals
 * Automatic order total calculation
 * Order status tracking
 
-💳 Payment Management
+### 💳 Payment Management
 
-* Record payments
+* Record customer payments
+* Link payments with orders
+* Cash / UPI / Card / Bank Transfer
 * Payment history
-* Payment methods
 * Payment status
 * Paid amount tracking
 * Pending balance calculation
 
-💰 Expense Management
+### 💰 Expense Management
 
 * Add expenses
 * Edit expenses
 * Delete expenses
 * Expense categories
-* Expense search
 * Expense tracking
 
-📄 Invoice & Reports
+### 📄 Invoice & Reports
 
-* Generate professional Invoice PDFs
+* Generate professional PDF invoices
+* Customer details
+* Order details
+* Product details
+* Quantity and price
+* Total amount
 * Business reports
 * Financial summaries
 * Monthly business reports
-* Order status reports
 * Payment summaries
 * Expense summaries
-* Net balance calculation
 
-📊 Dashboard
+### 📊 Dashboard
+
+The dashboard provides an overview of the business with:
 
 * Customer statistics
 * Product statistics
 * Inventory statistics
 * Order statistics
+* Measurement statistics
 * Payment statistics
 * Expense statistics
-* Order status charts
-* Monthly business charts
-* Payment status
-* Low stock alerts
+* Charts and reports
+* Order status information
 * Recent orders
 * Quick actions
 
+## 🛠️ Technologies Used
 
-
-🛠️ Technologies Used
-
-# Backend
-
-* Python
-* Django
-
-# Database
-
-* PostgreSQL
-
-# Frontend
+### Frontend
 
 * HTML5
 * CSS3
 * JavaScript
 * Chart.js
 
-# PDF
+### Backend
+
+* Python
+* Django
+
+### Database
+
+* PostgreSQL
+
+### PDF
 
 * ReportLab
 
-# Email
+### Email
 
 * Brevo API
 * Email OTP
 
-# Deployment
+### Deployment
 
 * Render
+* Gunicorn
 
-# Version Control
+### Version Control
 
 * Git
 * GitHub
 
+## 📂 Project Structure
 
- 📁 Project Modules
-
-`text
+```text
 Smart Boutique
 │
-├── Authentication
-├── Customers
-├── Measurements
-├── Products
-├── Inventory
-├── Orders
-├── Payments
-├── Expenses
-├── Dashboard
-├── Reporting
-└── Invoice PDF
+├── boutique
+├── customers
+├── dashboard
+├── expenses
+├── inventory
+├── measurements
+├── orders
+├── payments
+├── products
+├── userlogin
+│
+├── manage.py
+├── requirements.txt
+└── README.md
+```
 
- 🗄️ Database
+## 🗄️ Database
 
-The application uses "" PostgreSQL"" as the production database.
+The application uses **PostgreSQL** as the production database.
 
 Main data areas include:
 
@@ -192,69 +198,131 @@ Main data areas include:
 * Expenses
 * Users
 
-
-🔄 Application Workflow
+## 🔄 Application Workflow
 
 ```text
 Login
-  ↓
+   ↓
 Dashboard
-  ↓
+   ↓
 Customer
-  ↓
+   ↓
 Measurement
-  ↓
+   ↓
 Product / Inventory
-  ↓
+   ↓
 Order
-  ↓
+   ↓
 Order Items
-  ↓
+   ↓
 Payment
-  ↓
+   ↓
 Invoice
-  ↓
+   ↓
 Reports
-
 ```
 
-🚀 Deployment
+## ⚙️ Installation
 
-The application is deployed on "" Render "".
+### 1. Clone the repository
 
- Production Stack
+```bash
+git clone https://github.com/amarnath-dev-03/smart-boutique.git
+```
+
+### 2. Open the project
+
+```bash
+cd smart-boutique
+```
+
+### 3. Create a virtual environment
+
+```bash
+python -m venv venv
+```
+
+### 4. Activate the virtual environment
+
+Windows:
+
+```bash
+venv\Scripts\activate
+```
+
+### 5. Install dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 6. Run migrations
+
+```bash
+python manage.py migrate
+```
+
+### 7. Create an admin user
+
+```bash
+python manage.py createsuperuser
+```
+
+### 8. Start the development server
+
+```bash
+python manage.py runserver
+```
+
+Open:
 
 ```text
-Django
-   ↓
-Gunicorn
-   ↓
-Render
-   ↓
-PostgreSQL
+http://127.0.0.1:8000/
 ```
 
-Email OTP is handled through the "" Brevo API "".
+## 🔑 Environment Variables
 
-🎯 Project Purpose
+Sensitive configuration should be stored using environment variables and should not be committed to GitHub.
 
-The main purpose of Smart Boutique is to provide a simple digital management system for tailoring and boutique businesses.
+Example:
 
-It helps manage:
+```text
+SECRET_KEY=your-secret-key
+DEBUG=False
+DATABASE_URL=your-postgresql-database-url
+EMAIL_HOST_USER=your-email
+EMAIL_HOST_PASSWORD=your-email-password
+```
 
-* Customer information
-* Customer measurements
-* Products
-* Inventory
-* Orders
-* Payments
-* Expenses
-* Invoices
-* Business reports
+## 🚀 Deployment
 
-from one centralized application.
+The application is deployed using:
 
----
+* GitHub for source code
+* Render Web Service for the Django application
+* Render PostgreSQL for the production database
+* Gunicorn as the production application server
+* Brevo API for Email OTP delivery
+
+### Production Services
+
+**Web Service**
+
+```text
+smart-boutique
+```
+
+**Database**
+
+```text
+smart-boutique-db
+```
+
+## 📱 Responsive Design
+
+The application has been tested on desktop and mobile screen sizes.
+
+The interface is designed to provide a usable experience across different screen sizes.
 
 ## 🔒 Security
 
@@ -264,18 +332,20 @@ The project includes:
 * Password hashing
 * Session-based OTP verification
 * OTP expiry
+* Protected dashboard pages
 * Environment variables for production secrets
 * PostgreSQL production database
 * API-based email delivery
 
 Sensitive credentials and environment variables are not stored in the GitHub repository.
 
+## 👨‍💻 Developer
 
- 👨‍💻 Author
+**Amarnath P**
 
-""" Amarnath P """
+GitHub:
+https://github.com/amarnath-dev-03/
 
+## 📜 License
 
-📜 License
-
-This project was created for "" learning, development, and portfolio purposes "".
+This project was created for learning, development, and portfolio purposes.
