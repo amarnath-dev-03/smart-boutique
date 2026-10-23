@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
 from .models import Order, OrderItem
 from .forms import OrderItemForm
@@ -29,6 +30,7 @@ def update_order_total(order):
     )
 
 
+@login_required(login_url='/login/')
 def order_list(request):
 
     search = request.GET.get(
@@ -58,6 +60,7 @@ def order_list(request):
     )
 
 
+@login_required(login_url='/login/')
 def add_order(request):
 
     if request.method == 'POST':
@@ -119,6 +122,7 @@ def add_order(request):
     )
 
 
+@login_required(login_url='/login/')
 def edit_order(request, id):
 
     order = get_object_or_404(
@@ -269,6 +273,7 @@ def edit_order(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def delete_order(request, id):
 
     order = get_object_or_404(
@@ -293,6 +298,7 @@ def delete_order(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def add_order_item(request, order_id):
 
     order = get_object_or_404(
@@ -341,6 +347,7 @@ def add_order_item(request, order_id):
     )
 
 
+@login_required(login_url='/login/')
 def edit_order_item(request, id):
 
     item = get_object_or_404(
@@ -390,6 +397,7 @@ def edit_order_item(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def delete_order_item(request, id):
 
     item = get_object_or_404(
@@ -420,6 +428,7 @@ def delete_order_item(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def order_detail(request, id):
 
     order = get_object_or_404(
@@ -465,6 +474,7 @@ def order_detail(request, id):
 # INVOICE PDF
 # ==================================================
 
+@login_required(login_url='/login/')
 def order_invoice(request, id):
 
     order = get_object_or_404(
@@ -971,4 +981,3 @@ def order_invoice(request, id):
     pdf.save()
 
     return response
-
