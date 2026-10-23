@@ -1,12 +1,12 @@
-
-
-from django.core.serializers import python
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.db import models
+from django.contrib.auth.decorators import login_required
+
 from .models import Customer
 from .forms import CustomerForm
 
 
+@login_required(login_url='/login/')
 def customer_list(request):
     search = request.GET.get('search', '')
 
@@ -25,6 +25,7 @@ def customer_list(request):
     })
 
 
+@login_required(login_url='/login/')
 def add_customer(request):
     if request.method == 'POST':
         form = CustomerForm(request.POST)
@@ -40,10 +41,9 @@ def add_customer(request):
     })
 
 
-
-
+@login_required(login_url='/login/')
 def edit_customer(request, id):
-    customer = Customer.objects.get(id=id)
+    customer = get_object_or_404(Customer, id=id)
 
     if request.method == 'POST':
         form = CustomerForm(request.POST, instance=customer)
@@ -59,18 +59,18 @@ def edit_customer(request, id):
     })
 
 
+@login_required(login_url='/login/')
 def view_customer(request, id):
-    customer = Customer.objects.get(id=id)
+    customer = get_object_or_404(Customer, id=id)
 
     return render(request, 'customers/view_customer.html', {
         'customer': customer
     })
 
 
-
-
+@login_required(login_url='/login/')
 def delete_customer(request, id):
-    customer = Customer.objects.get(id=id)
+    customer = get_object_or_404(Customer, id=id)
 
     if request.method == 'POST':
         customer.delete()
@@ -79,4 +79,3 @@ def delete_customer(request, id):
     return render(request, 'customers/delete_customer.html', {
         'customer': customer
     })
-
