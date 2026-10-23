@@ -1,14 +1,13 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import InventoryItem
 from .forms import InventoryForm
-
 from products.models import Product
 
 
+@login_required(login_url='/login/')
 def inventory_list(request):
-
     search = request.GET.get('search', '')
 
     items = InventoryItem.objects.all()
@@ -25,7 +24,6 @@ def inventory_list(request):
     inventory_data = []
 
     for item in items:
-
         product = Product.objects.filter(
             name=item.name
         ).first()
@@ -45,14 +43,12 @@ def inventory_list(request):
     )
 
 
+@login_required(login_url='/login/')
 def add_inventory(request):
-
     if request.method == 'POST':
-
         form = InventoryForm(request.POST)
 
         if form.is_valid():
-
             item = form.save()
 
             # Find matching Product
@@ -61,20 +57,15 @@ def add_inventory(request):
             ).first()
 
             if product:
-
                 # Inventory -> Product Sync
                 product.name = item.name
                 product.category = item.category
                 product.price = item.price
                 product.stock = item.quantity
                 product.description = item.description
-
                 product.save()
-
             else:
-
-                # If Product does not exist,
-                # create a new Product automatically
+                # If Product does not exist, create it automatically.
                 Product.objects.create(
                     name=item.name,
                     category=item.category,
@@ -84,9 +75,7 @@ def add_inventory(request):
                 )
 
             return redirect('inventory_list')
-
     else:
-
         form = InventoryForm()
 
     return render(
@@ -98,8 +87,8 @@ def add_inventory(request):
     )
 
 
+@login_required(login_url='/login/')
 def edit_inventory(request, id):
-
     item = get_object_or_404(
         InventoryItem,
         id=id
@@ -108,14 +97,12 @@ def edit_inventory(request, id):
     old_name = item.name
 
     if request.method == 'POST':
-
         form = InventoryForm(
             request.POST,
             instance=item
         )
 
         if form.is_valid():
-
             item = form.save()
 
             # Find Product using OLD name
@@ -124,18 +111,14 @@ def edit_inventory(request, id):
             ).first()
 
             if product:
-
                 # Inventory -> Product Sync
                 product.name = item.name
                 product.category = item.category
                 product.price = item.price
                 product.stock = item.quantity
                 product.description = item.description
-
                 product.save()
-
             else:
-
                 # Safety: create Product if missing
                 Product.objects.create(
                     name=item.name,
@@ -146,12 +129,8 @@ def edit_inventory(request, id):
                 )
 
             return redirect('inventory_list')
-
     else:
-
-        form = InventoryForm(
-            instance=item
-        )
+        form = InventoryForm(instance=item)
 
     return render(
         request,
@@ -163,15 +142,14 @@ def edit_inventory(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def delete_inventory(request, id):
-
     item = get_object_or_404(
         InventoryItem,
         id=id
     )
 
     if request.method == 'POST':
-
         # Find matching Product
         product = Product.objects.filter(
             name=item.name
@@ -195,8 +173,8 @@ def delete_inventory(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def view_inventory(request, id):
-
     item = get_object_or_404(
         InventoryItem,
         id=id
@@ -214,4 +192,3 @@ def view_inventory(request, id):
             'product': product
         }
     )
-
