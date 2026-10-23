@@ -1,13 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Product
 from .forms import ProductForm
-
 from inventory.models import InventoryItem
 
 
+@login_required(login_url='/login/')
 def product_list(request):
-
     search = request.GET.get('search', '')
 
     products = Product.objects.all()
@@ -25,14 +25,12 @@ def product_list(request):
     })
 
 
+@login_required(login_url='/login/')
 def add_product(request):
-
     if request.method == 'POST':
-
         form = ProductForm(request.POST)
 
         if form.is_valid():
-
             product = form.save()
 
             # Automatically create stock item
@@ -54,8 +52,8 @@ def add_product(request):
     })
 
 
+@login_required(login_url='/login/')
 def view_product(request, id):
-
     product = get_object_or_404(Product, id=id)
 
     return render(request, 'products/view_product.html', {
@@ -63,21 +61,18 @@ def view_product(request, id):
     })
 
 
+@login_required(login_url='/login/')
 def edit_product(request, id):
-
     product = get_object_or_404(Product, id=id)
-
     old_name = product.name
 
     if request.method == 'POST':
-
         form = ProductForm(
             request.POST,
             instance=product
         )
 
         if form.is_valid():
-
             product = form.save()
 
             # Update matching inventory item
@@ -86,18 +81,15 @@ def edit_product(request, id):
             ).first()
 
             if inventory_item:
-
                 inventory_item.name = product.name
                 inventory_item.category = product.category
                 inventory_item.quantity = product.stock
                 inventory_item.price = product.price
                 inventory_item.description = product.description
-
                 inventory_item.save()
 
             else:
-
-                # If inventory item does not exist, create it
+                # Create inventory item if missing
                 InventoryItem.objects.create(
                     name=product.name,
                     category=product.category,
@@ -116,12 +108,11 @@ def edit_product(request, id):
     })
 
 
+@login_required(login_url='/login/')
 def delete_product(request, id):
-
     product = get_object_or_404(Product, id=id)
 
     if request.method == 'POST':
-
         # Delete matching inventory item
         InventoryItem.objects.filter(
             name=product.name
