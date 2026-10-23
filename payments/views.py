@@ -1,7 +1,7 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import JsonResponse
 from django.db.models import Sum
+from django.contrib.auth.decorators import login_required
 
 from .models import Payment
 from .forms import PaymentForm
@@ -14,6 +14,7 @@ from orders.models import Order
 # ORDERS BY CUSTOMER
 # ==========================================
 
+@login_required(login_url='/login/')
 def orders_by_customer(request):
 
     customer_id = request.GET.get('customer_id')
@@ -60,6 +61,7 @@ def orders_by_customer(request):
 # PAYMENT LIST
 # ==========================================
 
+@login_required(login_url='/login/')
 def payment_list(request):
 
     search = request.GET.get('search', '')
@@ -101,6 +103,7 @@ def payment_list(request):
 # PAYMENT HISTORY
 # ==========================================
 
+@login_required(login_url='/login/')
 def payment_history(request):
 
     search = request.GET.get('search', '')
@@ -141,6 +144,7 @@ def payment_history(request):
 # ADD PAYMENT
 # ==========================================
 
+@login_required(login_url='/login/')
 def add_payment(request):
 
     # --------------------------------------
@@ -352,7 +356,7 @@ def add_payment(request):
 
             form.add_error(
                 None,
-                f'Payment cannot exceed the remaining balance of ₹{balance_amount}.'
+                f'Payment cannot exceed the remaining balance of â‚¹{balance_amount}.'
             )
 
             return render(
@@ -456,6 +460,7 @@ def get_order_data():
 # EDIT PAYMENT
 # ==========================================
 
+@login_required(login_url='/login/')
 def edit_payment(request, id):
 
     payment = get_object_or_404(
@@ -499,6 +504,7 @@ def edit_payment(request, id):
 # DELETE PAYMENT
 # ==========================================
 
+@login_required(login_url='/login/')
 def delete_payment(request, id):
 
     payment = get_object_or_404(
@@ -531,6 +537,7 @@ def delete_payment(request, id):
 # PAYMENT DETAIL
 # ==========================================
 
+@login_required(login_url='/login/')
 def payment_detail(request, id):
 
     payment = get_object_or_404(
@@ -581,4 +588,3 @@ def payment_detail(request, id):
             'payment_status': payment_status
         }
     )
-
