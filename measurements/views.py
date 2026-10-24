@@ -1,23 +1,19 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib.auth.decorators import login_required
 
 from .models import Measurement
 from .forms import MeasurementForm
 
 
+@login_required(login_url='/login/')
 def measurement_list(request):
-
-    search = request.GET.get(
-        'search',
-        ''
-    )
+    search = request.GET.get('search', '')
 
     measurements = Measurement.objects.all().order_by(
         '-created_at'
     )
 
     if search:
-
         measurements = measurements.filter(
             customer__name__icontains=search
         )
@@ -32,24 +28,15 @@ def measurement_list(request):
     )
 
 
+@login_required(login_url='/login/')
 def add_measurement(request):
-
     if request.method == 'POST':
-
-        form = MeasurementForm(
-            request.POST
-        )
+        form = MeasurementForm(request.POST)
 
         if form.is_valid():
-
             form.save()
-
-            return redirect(
-                'measurement_list'
-            )
-
+            return redirect('measurement_list')
     else:
-
         form = MeasurementForm()
 
     return render(
@@ -61,8 +48,8 @@ def add_measurement(request):
     )
 
 
+@login_required(login_url='/login/')
 def view_measurement(request, id):
-
     measurement = get_object_or_404(
         Measurement,
         id=id
@@ -77,30 +64,23 @@ def view_measurement(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def edit_measurement(request, id):
-
     measurement = get_object_or_404(
         Measurement,
         id=id
     )
 
     if request.method == 'POST':
-
         form = MeasurementForm(
             request.POST,
             instance=measurement
         )
 
         if form.is_valid():
-
             form.save()
-
-            return redirect(
-                'measurement_list'
-            )
-
+            return redirect('measurement_list')
     else:
-
         form = MeasurementForm(
             instance=measurement
         )
@@ -115,20 +95,16 @@ def edit_measurement(request, id):
     )
 
 
+@login_required(login_url='/login/')
 def delete_measurement(request, id):
-
     measurement = get_object_or_404(
         Measurement,
         id=id
     )
 
     if request.method == 'POST':
-
         measurement.delete()
-
-        return redirect(
-            'measurement_list'
-        )
+        return redirect('measurement_list')
 
     return render(
         request,
@@ -137,4 +113,3 @@ def delete_measurement(request, id):
             'measurement': measurement
         }
     )
-
